@@ -23,8 +23,8 @@ body {
 }
 
 button {
-    background: #0e3fd4;
-    border: 1px solid #0e3fd4;
+    background: #0e46d4;
+    border: 1px solid #0e46d4;
     color: #FFF!important;
     border-radius: 6px;
     padding: 8px 12px;
@@ -151,7 +151,7 @@ div[for="content"] > div div:nth-child(2) {
 
 div[for="timer"] {
     text-align: center;
-    padding: 20px 30px;
+    padding: 30px 30px;
 }
 
 div[for="timer"] a {
