@@ -23,8 +23,8 @@ body {
 }
 
 button {
-    background: #0e46d4;
-    border: 1px solid #0e46d4;
+    background: #154fd5;
+    border: 1px solid #154fd5;
     color: #FFF!important;
     border-radius: 6px;
     padding: 8px 12px;
@@ -85,7 +85,7 @@ div[for="card"] {
 }
 
 div[for="head"] {
-    background-color: #0e3fd4;
+    background-color: #1541d5;
     border-radius: 12px 12px 0 0;
     padding: 10px 8px;
     color:#fff;
@@ -96,7 +96,7 @@ div[for="head"] {
 }
 
 div[for="head_info"] {
-    background-color: #0e3fd4;
+    background-color: #1541d5;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 4px;
@@ -157,7 +157,7 @@ div[for="timer"] {
 div[for="timer"] a {
     text-decoration: none;
     font-size: 17px;
-    color: #0e3fd4;
+    color: #1541d5;
     font-family: averta_semibold, sans-serif;
     font-weight: 400;
 }
