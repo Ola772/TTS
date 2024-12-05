@@ -83,6 +83,17 @@
   word-wrap: normal;
     }
     
+div[for="head"] {
+    background-color: #154ed5;
+    border-radius: 12px 12px 0 0;
+    padding: 10px 8px;
+    color:#fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 15px;
+
+}
     div[for="head_info"] > div div:nth-child(2) {
     font-size: 22px;
     font-family: averta_semibold, sans-serif;
@@ -414,16 +425,17 @@
         
 </style>
 <body>
-    <div for="top-bar">
-        <div for="icon">
-            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
-        </div>
-        <div style="text-align:center">
-            &nbsp;&nbsp;&nbsp;&nbsp;My Tickets
-        </div>
-        <div style="text-align:left">
-            Help
-        </div>
+<div for="top-bar">
+    <div for="icon">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+    </div>
+    <div>
+        <span>My Tickets</span>
+    </div>
+    <div style="text-align:right">
+        Help
+    </div>
+    <div>
 
     </div>
    <main>
