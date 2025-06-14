@@ -46,7 +46,7 @@ div[for="head"] {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 14px;
+    font-size: 12px;
 }
     div[for="card"] {
         min-height: 400px;
@@ -55,12 +55,19 @@ div[for="head"] {
 
 div[for="head_info"] {
     background-color: #154ed5;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 4px;
-    padding: 15px 10px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: center;
+    /grid-template-columns: 1fr 1fr;/
+    /grid-gap: 4px;/
+    /padding: 10px 10px;/
 
  }
+
+div[for="head_content"]{
+    padding-left: -10px;
+}
 
 div[for="footer"] img {
     width: 100%;
@@ -350,9 +357,9 @@ font-size: 25px !important;
     }
     
     div[for="head_info"] > div div:nth-child(2) {
-    font-size: 21px;
-    font-family: averta_semibold, sans-serif;
-    font-weight: 400;
+    /font-size: 21px;/
+    /font-family: averta_semibold, sans-serif;/
+    /font-weight: 400;/
     }
     body{
         position: relative;
@@ -393,11 +400,11 @@ font-size: 25px !important;
         width: 350px;
         overflow-x: scroll;
         overflow-y: hidden;
-        margin-left: -10px;
+        margin-left: 10px;
         font-family: Arial;
     }
      div[for="content"] > div div:nth-child(1) {
-    font-size: 16px;
+    font-size: 21px;
     font-family: Arial;
     }
     
@@ -670,6 +677,47 @@ font-size: 25px !important;
     div[for="map"] > div {
       
 }
+
+
+    .tabs {
+	    display: flex;
+	    justify-content: space-around;
+	    background-color: #154ed5;
+	    color: white;
+        margin-bottom: 1px;
+    }
+
+    .tab {
+	    padding: 12px;
+	    font-weight: bold;
+        cursor: pointer;
+        FONT-SIZE: small;
+    }
+    .tab2{
+        filter: opacity(80%);
+    }
+
+
+    .map {
+	    width: 100%;
+	    height: 120px;
+	    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/UBS_Arena_map.png/800px-UBS_Arena_map.png') no-repeat center/cover;
+	    margin-top: 12px;
+    }
+    .innerHead{
+        display:flex;
+        justify-content: flex-end;
+        gap: 100px;
+    }
+    .tab{
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .tab.active {
+        border-bottom: 4px solid white;
+    }
+
         
 </style>
 <body>
@@ -687,6 +735,12 @@ font-size: 25px !important;
 
         </div>
     </div>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('tickets')">MY TICKETS</div>
+        <div class="tab" onclick="showTab('addons')">ADD-ONS</div>
+    </div>
+
     <div id="bnav" style="border-bottom: 1px solid #ababab;visibility: hidden;">
         <div id="hc">
             <img src="https://www.ticketmaster.com/s3images/healthcheck/Health_Check_Small.svg" alt="health check icon">
@@ -700,104 +754,86 @@ font-size: 25px !important;
         <div for="cards">
             
             <div for="card">
-                <div for="head" style="text-align: center;">Ultimate Package</div>
+                <div for="head" style="text-align: center;">SOUNDCHECK VIP PACKAGE</div>
                 <div for="head_info">
                     <div>
-                            <div>SEC</div>
-                            <div><b>A2</b></b></div>
-                        </div>
-                        <div>
-                            <div>ROW</div>
-                            <div><b>3</b></b></div>
-                        </div>
-                        <div>
-                            <div>SEAT</div>
-                            <div><b>7</b></div>
-                        </div>
+                        <div>SEC</div>
+                        <div>FLR1</div>
                     </div>
-                    <div for="content">
-                        <img src=https://s1.ticketm.net/dam/a/ee5/c4a7845b-5ab0-4d4a-ac91-ea8831447ee5_RETINA_PORTRAIT_3_2.jpg alt="" srcset="">
-                        <div>
-                            <div>
-                            <div style="position: absolute; bottom: 0;left:0; right:0;padding: 5px 3.5px;">
-                                <div>ENHYPEN WORLD TOUR 'WALK THE LINE' IN U.S.</div>
-                                <div><span>Sat, Aug 16, 7:30pm&nbsp;•&nbsp;BMO Stadium</span></div>
-                            </div>
-                        </div>
-                        </div>
+                    <div>
+                        <div>ROW</div>
+                        <div>9</div>
                     </div>
-                    
-                    <div for="timer1">
-                        <center>Ticket will be ready in:</center>
-                        <div class="countdown-timer-container1">
- <div class="countdown-timer-values" id="days">24</div>
- <div class="countdown-timer-values" id="hours">00</div>
- <div class="countdown-timer-values" id="minutes">&nbsp;00</div>
- <div class="countdown-timer-values" id="seconds">00</div>
- &nbsp;&nbsp;&nbsp;&nbsp;<div id="mt">DAY</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <div id="mu">HOUR</div>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <div id="mv">MIN</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <div id="mw">SECONDS</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- </div>
-                        
-                        <div id="vt">
-                           <a href="Ticketdetails 2.html">Ticket Details</a>
-                        </div>
-                    </div>
-                    <div for="footer">
-                        <img src="static/verified.jpg" alt="">
+                    <div>
+                        <div>SEAT</div>
+                        <div>5</div>
                     </div>
                 </div>
+                <div for="content">
+                    <img src="https://s1.ticketm.net/dam/a/328/ec0a213f-d159-468d-a463-d5dd988f3328_EVENT_DETAIL_PAGE_16_9.jpg" alt="" srcset="">
+                    <div>
+                        <div style="position: absolute; bottom: 0;left:0; right:0;padding: 10px 5px;">
+                            <div>
+                                Stray Kids World Tour [dominATE SAN FRANCISCO]</div>
+                            <div><span>Wed, May 28, 2025, 7:30PM</span><span>&nbsp;•&nbsp;</span><span>Oracle Park</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div for="timer">
+                    <div id='sub_t' style="text-align: center;">FLOOR 1</div>
+                    <div for="pay">
+                            <img src="../developer.apple.com/wallet/add-to-apple-wallet-guidelines/images/button-one-line-large_2x.png" style="
+                            width: 100%;">
+                    </div>
+                    <div id="vt">
+                        <a href="3.html">Ticket Details</a>
+                    </div>
+                </div>
+                <div for="footer">
+                    <img src="static/verified.jpg" alt="">
+                </div>
+            </div>
             
-                <div for="card">
-                    <div for="head" style="text-align: center;"><font size="-1">Ultimate Package</font></div>
-                    <div for="head_info">
-                        <div>
-                            <div>SEC</div>
-                            <div><b>A2</b></b></div>
-                        </div>
-                        <div>
-                            <div>ROW</div>
-                            <div><b>3</b></b></div>
-                        </div>
-                        <div>
-                            <div>SEAT</div>
-                            <div><b>8</b></div>
-                        </div>
+            <div for="card">
+                <div for="head" style="text-align: center;">SOUNDCHECK VIP PACKAGE</div>
+                <div for="head_info">
+                    <div>
+                        <div>SEC</div>
+                        <div>FLR1</div>
                     </div>
-                    <div for="content">
-                        <img src=https://s1.ticketm.net/dam/a/ee5/c4a7845b-5ab0-4d4a-ac91-ea8831447ee5_RETINA_PORTRAIT_3_2.jpg srcset="">
-                        <div>
-                            <div>
-                            <div style="position: absolute; bottom: 0;left:0; right:0;padding: 5px 3.5px;">
-                                <div>ENHYPEN WORLD TOUR 'WALK THE LINE' IN U.S.</div>
-                                <div><span>Sat, Aug 16, 7:30pm&nbsp;•&nbsp;BMO Stadium</span></div>
-                            </div>
-                        </div>
-                        </div>
+                    <div>
+                        <div>ROW</div>
+                        <div>9</div>
                     </div>
-                    
-                    <div for="timer2">
-                        <center>Ticket will be ready in:</center>
-                        <div class="countdown-timer-container2">
- <div class="countdown-timer-values" id="days">07</div>
- <div class="countdown-timer-values" id="hours">11</div>
- <div class="countdown-timer-values" id="minutes">&nbsp;38</div>
- <div class="countdown-timer-values" id="seconds">30</div>
- &nbsp;&nbsp;&nbsp;&nbsp;<div id="mt">DAY</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <div id="mu">HOUR</div>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <div id="mv">MIN</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <div id="mw">SECONDS</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- </div>
-                        
-                        <div id="vt">
-                           <a href="Ticketdetails 2.html">Ticket Details</a>
-                        </div>
-                    </div>
-                    <div for="footer">
-                        <img src="static/verified.jpg" alt="">
+                    <div>
+                        <div>SEAT</div>
+                        <div>6</div>
                     </div>
                 </div>
+                <div for="content">
+                    <img src="https://s1.ticketm.net/dam/a/328/ec0a213f-d159-468d-a463-d5dd988f3328_EVENT_DETAIL_PAGE_16_9.jpg" alt="" srcset="">
+                    <div>
+                        <div style="position: absolute; bottom: 0;left:0; right:0;padding: 10px 5px;">
+                            <div>
+                                Stray Kids World Tour [dominATE SAN FRANCISCO]</div>
+                            <div><span>Wed, May 28, 2025, 7:30PM</span><span>&nbsp;•&nbsp;</span><span>Oracle Park</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div for="timer">
+                    <div id='sub_t' style="text-align: center;">FLOOR 1</div>
+                    <div for="pay">
+                            <img src="../developer.apple.com/wallet/add-to-apple-wallet-guidelines/images/button-one-line-large_2x.png" style="
+                            width: 100%;">
+                    </div>
+                    <div id="vt">
+                        <a href="3.html">Ticket Details</a>
+                    </div>
+                </div>
+                <div for="footer">
+                    <img src="static/verified.jpg" alt="">
+                </div>
+            </div>
             
         </div>
         <div for="dots">
@@ -914,33 +950,50 @@ font-size: 25px !important;
                 </div>
             </div>
         </div>
+    <div class="map"></div>
     </div>
-    
+
+
     
     <script>
+
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.content');
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            document.querySelector(.tab[onclick="showTab('${tabId}')"]).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
         // counting days to March 28
-const countDownDateTime = new Date("AUG 13, 2025 7:30:00").getTime();
-const daysValue = document.querySelector("#days");
-const hoursValue = document.querySelector("#hours");
-const minutesValue = document.querySelector("#minutes");
-const secondsValue = document.querySelector("#seconds");
-// run this function every 1000 ms or 01 second
-let x = setInterval(function () {
- const dateTimeNow = new Date().getTime();
- let difference = countDownDateTime - dateTimeNow;
- // calculating time and assigning values
- daysValue.innerHTML = Math.floor(difference / (1000 * 60 * 60 * 24));
- hoursValue.innerHTML = Math.floor(
- (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
- );
- minutesValue.innerHTML = Math.floor(
- (difference % (1000 * 60 * 60)) / (1000 * 60)
- );
- secondsValue.innerHTML = Math.floor((difference % (1000 * 60)) / 1000);
- if (difference < 00) {
- clearInterval(x);
- }
-}, 1000);
+        const countDownDateTime = new Date("AUG 3, 2025 7:30:00").getTime();
+        const daysValue = document.getElementsByClassName("days");
+        const hoursValue = document.getElementsByClassName("hours");
+        const minutesValue = document.getElementsByClassName("minutes");
+        const secondsValue = document.getElementsByClassName("seconds");
+        // run this function every 1000 ms or 01 second
+        let x = setInterval(function () {
+            const dateTimeNow = new Date().getTime();
+            let difference = countDownDateTime - dateTimeNow;
+            // calculating time and assigning values
+
+            daysValue[0].innerHTML = Math.floor(difference / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            daysValue[1].innerHTML = Math.floor(difference / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            hoursValue[0].innerHTML = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            hoursValue[1].innerHTML = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+
+            minutesValue[0].innerHTML = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            minutesValue[1].innerHTML = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+
+            secondsValue[0].innerHTML = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            secondsValue[1].innerHTML = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, '0');
+
+            if (difference < 0) {
+                clearInterval(x);
+             }
+        }, 1000);
 
     
 
