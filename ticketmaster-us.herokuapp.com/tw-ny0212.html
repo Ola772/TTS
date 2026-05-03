@@ -1,3 +1,4 @@
+```html id="k9wq3x"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,78 +13,7 @@ body {
     background: #f5f5f5;
 }
 
-/* HEADER */
-.header {
-    position: relative;
-    height: 220px;
-    background: url('https://s1.ticketm.net/dam/a/2a7/70e4e1ab-52f1-4df1-94a8-186fe4a602a7_EVENT_DETAIL_PAGE_16_9.jpg') center/cover;
-    color: rgb(16, 10, 10);
-}
-
-.header-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-}
-
-.header-content {
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
-}
-
-/* TABS */
-.tabs {
-    display: flex;
-    background: white;
-}
-
-.tab {
-    flex: 1;
-    text-align: center;
-    padding: 12px;
-    color: gray;
-}
-
-.tab.active {
-    color: black;
-    border-bottom: 3px solid black;
-}
-
-/* ORDER */
-.order {
-    padding: 15px;
-    background: white;
-}
-
-/* TICKET */
-.ticket {
-    background: white;
-    margin: 10px 15px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-.ticket-header {
-    padding: 10px;
-    font-size: 12px;
-    background: #eee;
-    font-weight: bold;
-}
-
-.ticket-body {
-    display: flex;
-    justify-content: space-around;
-    padding: 15px;
-    text-align: center;
-}
-
-.label {
-    color: gray;
-    font-size: 11px;
-}
-
-/* BUTTONS */
+/* FLOATING PILL BUTTON */
 .floating {
     position: fixed;
     bottom: 20px;
@@ -91,161 +21,145 @@ body {
     transform: translateX(-50%);
     background: white;
     border-radius: 30px;
-    padding: 10px 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    padding: 8px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     display: flex;
-    gap: 20px;
+    gap: 5px;
 }
 
 .floating button {
     border: none;
-    background: none;
-    font-weight: bold;
+    background: transparent;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-weight: 600;
     cursor: pointer;
 }
- .floating button:hover {
-     color: black;
-     }
 
-/* MODAL */
+.floating button.active {
+    background: #eee;
+}
+
+/* OVERLAY */
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.4);
     display: none;
 }
 
-.modal {
+/* BOTTOM SHEET */
+.sheet {
     position: absolute;
     bottom: -100%;
     width: 100%;
     background: white;
     border-radius: 20px 20px 0 0;
     padding: 20px;
-    transition: 0.3s;
+    transition: 0.35s ease;
 }
 
-.modal.active {
+.sheet.active {
     bottom: 0;
 }
 
-.seat {
-    padding: 12px;
-    border: 1px solid #ccc;
-    margin: 10px 0;
+/* HANDLE */
+.handle {
+    width: 40px;
+    height: 5px;
+    background: #ccc;
     border-radius: 10px;
+    margin: 0 auto 15px;
+}
+
+/* SEAT LIST */
+.seat {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
     cursor: pointer;
 }
 
 .seat.selected {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+/* CONFIRM BUTTON */
+.confirm {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px;
+    border: none;
     background: #2563eb;
     color: white;
+    border-radius: 10px;
+    font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <div class="header-overlay"></div>
-
-    <div class="header-content">
-        <div class="header-sub">SAT • MAY 16, 2026 • 7:00 PM</div>
-        <div class="header-title">BTS WORLD TOUR 'ARIRANG'</div>
-        <div class="header-sub">Stanford Stadium- Stanford, CA</div>
-    </div>
-</div>
-
-<!-- TABS -->
-<div class="tabs">
-    <div class="tab active">Tickets</div>
-    <div class="tab">Extras</div>
-</div>
-
-<!-- ORDER -->
-<div class="order">
-    <b>Order #44-26129/NCA</b><br>
-    x2 Tickets
-</div>
-
-<!-- TICKETS -->
-<div class="ticket">
-    <div class="ticket-header">PREFERRED SEATING</div>
-    <div class="ticket-body">
-        <div><div class="label">SECTION</div>Sec B</div>
-        <div><div class="label">ROW</div>8</div>
-        <div><div class="label">SEAT</div>5</div>
-    </div>
-</div>
-
-<div class="ticket">
-    <div class="ticket-header">PREFERRED SEATING</div>
-    <div class="ticket-body">
-        <div><div class="label">SECTION</div>Sec B</div>
-        <div><div class="label">ROW</div>8</div>
-        <div><div class="label">SEAT</div>6</div>
-    </div>
-</div>
-
-<!-- FLOATING BUTTONS -->
+<!-- FLOAT BUTTON -->
 <div class="floating">
     <button id="transferBtn">Transfer</button>
     <button>Sell</button>
 </div>
 
-<!-- MODAL -->
-<div class="overlay" id="overlay">
-    <div class="modal" id="modal">
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeSheet()">
+    <div class="sheet" id="sheet" onclick="event.stopPropagation()">
 
-        <h3>Select Ticket to Transfer</h3>
+        <div class="handle"></div>
 
-        <div class="seat" onclick="selectSeat(this)">Seat 5</div>
-        <div class="seat" onclick="selectSeat(this)">Seat 6</div>
+        <h3>Select Tickets</h3>
 
-        <button onclick="confirmTransfer()">Confirm Transfer</button>
-        <button onclick="closeModal()">Cancel</button>
+        <div class="seat" onclick="toggleSeat(this)">Seat 5</div>
+        <div class="seat" onclick="toggleSeat(this)">Seat 6</div>
+
+        <button class="confirm" onclick="confirmTransfer()">Transfer</button>
 
     </div>
 </div>
 
 <script>
-
-// OPEN TRANSFER
+// OPEN SHEET
 document.getElementById("transferBtn").onclick = function () {
     document.getElementById("overlay").style.display = "block";
     setTimeout(() => {
-        document.getElementById("modal").classList.add("active");
-    }, 50);
+        document.getElementById("sheet").classList.add("active");
+    }, 10);
 };
 
-// CLOSE MODAL
-function closeModal() {
-    document.getElementById("modal").classList.remove("active");
+// CLOSE SHEET
+function closeSheet() {
+    document.getElementById("sheet").classList.remove("active");
     setTimeout(() => {
         document.getElementById("overlay").style.display = "none";
     }, 300);
 }
 
 // SELECT SEAT
-function selectSeat(el) {
+function toggleSeat(el) {
     el.classList.toggle("selected");
 }
 
-// CONFIRM TRANSFER
+// CONFIRM
 function confirmTransfer() {
     let selected = document.querySelectorAll(".seat.selected");
 
     if (selected.length === 0) {
-        alert("Select a ticket first!");
+        alert("Select at least one ticket");
         return;
     }
 
-    alert("Transfer initiated for " + selected.length + " ticket(s)");
-    closeModal();
+    alert("Transfer started for " + selected.length + " ticket(s)");
+    closeSheet();
 }
-
 </script>
 
 </body>
 </html>
+```
