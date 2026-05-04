@@ -1,9 +1,12 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tickets</title>
+<title>Ticket App</title>
+
+<!-- Barcode Library -->
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode"></script>
 
 <style>
 body {
@@ -19,46 +22,31 @@ body {
     position: relative;
     color: white;
 }
-
 .header::after {
     content: "";
     position: absolute;
     inset: 0;
     background: rgba(0,0,0,0.5);
 }
-
 .header-content {
     position: absolute;
     bottom: 20px;
     left: 15px;
-    z-index: 2;
 }
-
-.header-title {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.header-sub {
-    font-size: 13px;
-    opacity: 0.9;
-}
+.header-title { font-size: 22px; font-weight: bold; }
+.header-sub { font-size: 13px; }
 
 /* TABS */
 .tabs {
     display: flex;
     background: white;
-    border-bottom: 1px solid #ddd;
 }
-
 .tab {
     flex: 1;
     text-align: center;
     padding: 14px;
-    font-weight: 500;
-    color: #777;
+    color: gray;
 }
-
 .tab.active {
     color: black;
     border-bottom: 3px solid black;
@@ -68,10 +56,9 @@ body {
 .order {
     background: white;
     padding: 15px;
-    font-size: 14px;
 }
 
-/* TICKET CARD */
+/* TICKET */
 .ticket {
     margin: 12px;
     background: white;
@@ -79,32 +66,35 @@ body {
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
-
 .ticket-header {
     padding: 12px;
     font-size: 12px;
     background: #f0f0f0;
     font-weight: bold;
 }
-
 .ticket-body {
     display: flex;
     justify-content: space-around;
     padding: 18px;
     text-align: center;
 }
+.label { font-size: 11px; color: #888; }
+.value { font-size: 16px; font-weight: bold; }
 
-.label {
+/* BARCODE */
+.barcode-container {
+    padding: 15px;
+    border-top: 1px dashed #ddd;
+    text-align: center;
+}
+.barcode-text {
     font-size: 11px;
-    color: #888;
+    color: #777;
+    margin-top: 5px;
+    letter-spacing: 2px;
 }
 
-.value {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* FLOATING ACTION BAR */
+/* FLOATING BUTTON */
 .floating {
     position: fixed;
     bottom: 20px;
@@ -117,17 +107,12 @@ body {
     display: flex;
     gap: 25px;
 }
-
 .floating button {
     border: none;
     background: none;
     font-weight: 600;
     color: #555;
     cursor: pointer;
-}
-
-.floating button:hover {
-    color: black;
 }
 
 /* OVERLAY */
@@ -148,32 +133,41 @@ body {
     padding: 20px;
     transition: 0.3s;
 }
-
-/* HANDLE */
-.handle {
-    width: 40px;
-    height: 5px;
-    background: #ccc;
-    border-radius: 10px;
-    margin: 0 auto 15px;
-}
-
-/* SEATS */
 .seat {
     padding: 15px;
     border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
     cursor: pointer;
 }
-
 .seat.selected {
     color: #2563eb;
     font-weight: bold;
 }
-
-/* BUTTON */
 .confirm {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+/* TRANSFER PAGE */
+#transferPage {
+    display: none;
+    background: white;
+    min-height: 100vh;
+    padding: 20px;
+}
+.input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.submit {
     margin-top: 20px;
     width: 100%;
     padding: 14px;
@@ -188,7 +182,9 @@ body {
 
 <body>
 
-<!-- HEADER -->
+<!-- MAIN PAGE -->
+<div id="mainPage">
+
 <div class="header">
     <div class="header-content">
         <div class="header-sub">SAT • MAY 16, 2026 • 7:00 PM</div>
@@ -197,103 +193,104 @@ body {
     </div>
 </div>
 
-<!-- TABS -->
 <div class="tabs">
     <div class="tab active">Tickets</div>
     <div class="tab">Extras</div>
 </div>
 
-<!-- ORDER -->
 <div class="order">
-    <strong>Order #44-26129/NCA</strong><br>
+    <b>Order #44-26129/NCA</b><br>
     <span style="color:#777;">2 Tickets</span>
 </div>
 
-<!-- TICKET -->
 <div class="ticket">
     <div class="ticket-header">ARMY MEMBERSHIP PRESALE</div>
 
     <div class="ticket-body">
-        <div>
-            <div class="label">SECTION</div>
-            <div class="value">B</div>
-        </div>
-        <div>
-            <div class="label">ROW</div>
-            <div class="value">8</div>
-        </div>
-        <div>
-            <div class="label">SEATS</div>
-            <div class="value">5-6</div>
-        </div>
+        <div><div class="label">SECTION</div><div class="value">B</div></div>
+        <div><div class="label">ROW</div><div class="value">8</div></div>
+        <div><div class="label">SEATS</div><div class="value">5-6</div></div>
+    </div>
+
+    <div class="barcode-container">
+        <svg id="barcode"></svg>
+        <div class="barcode-text">BTS-SEC-B-ROW8-5-6</div>
     </div>
 </div>
 
-<!-- FLOATING -->
 <div class="floating">
     <button id="transferBtn">Transfer</button>
     <button>Sell</button>
 </div>
 
-<!-- OVERLAY -->
+</div>
+
+<!-- TRANSFER FORM PAGE -->
+<div id="transferPage">
+    <h2>Transfer Tickets</h2>
+
+    <input class="input" placeholder="Full Name">
+    <input class="input" placeholder="Email Address">
+    <input class="input" placeholder="Phone Number">
+
+    <button class="submit" onclick="finishTransfer()">Send Transfer</button>
+</div>
+
+<!-- SHEET -->
 <div id="overlay">
     <div id="sheet">
-
-        <div class="handle"></div>
-
         <h3>Select Tickets</h3>
 
         <div class="seat" onclick="toggleSeat(this)">Seat 5</div>
         <div class="seat" onclick="toggleSeat(this)">Seat 6</div>
 
-        <button class="confirm" onclick="confirmTransfer()">Transfer</button>
-
+        <button class="confirm" onclick="goToTransfer()">Continue</button>
     </div>
 </div>
 
 <script>
-// OPEN
-document.getElementById("transferBtn").onclick = function () {
-    document.getElementById("overlay").style.display = "block";
+// BARCODE
+JsBarcode("#barcode", "BTS-SEC-B-ROW8-5-6", {
+    format: "CODE128",
+    width: 2,
+    height: 60,
+    displayValue: false
+});
 
-    setTimeout(() => {
-        document.getElementById("sheet").style.bottom = "0";
-    }, 10);
+// OPEN SHEET
+document.getElementById("transferBtn").onclick = function () {
+    overlay.style.display = "block";
+    setTimeout(()=>sheet.style.bottom="0",10);
 };
 
 // CLOSE
-document.getElementById("overlay").onclick = function () {
-    closeSheet();
+overlay.onclick = function () {
+    sheet.style.bottom = "-100%";
+    setTimeout(()=>overlay.style.display="none",300);
 };
-
-document.getElementById("sheet").onclick = function (e) {
-    e.stopPropagation();
-};
-
-function closeSheet() {
-    document.getElementById("sheet").style.bottom = "-100%";
-
-    setTimeout(() => {
-        document.getElementById("overlay").style.display = "none";
-    }, 300);
-}
+sheet.onclick = e => e.stopPropagation();
 
 // SELECT
-function toggleSeat(el) {
+function toggleSeat(el){
     el.classList.toggle("selected");
 }
 
-// CONFIRM
-function confirmTransfer() {
+// GO TO FORM
+function goToTransfer(){
     let selected = document.querySelectorAll(".seat.selected");
 
-    if (selected.length === 0) {
+    if(selected.length === 0){
         alert("Select at least one ticket");
         return;
     }
 
-    alert("Transfer started for " + selected.length + " ticket(s)");
-    closeSheet();
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("transferPage").style.display = "block";
+}
+
+// FINAL
+function finishTransfer(){
+    alert("Transfer Sent Successfully!");
 }
 </script>
 
