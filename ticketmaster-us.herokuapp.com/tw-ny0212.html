@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ticket App</title>
 
-<!-- Barcode Library -->
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode"></script>
+<title>Tickets</title>
 
 <style>
 body {
@@ -17,7 +15,7 @@ body {
 
 /* HEADER */
 .header {
-    height: 240px;
+    height: 250px;
     background: url('https://s1.ticketm.net/dam/a/2a7/70e4e1ab-52f1-4df1-94a8-186fe4a602a7_EVENT_DETAIL_PAGE_16_9.jpg') center/cover;
     position: relative;
     color: white;
@@ -30,11 +28,16 @@ body {
 }
 .header-content {
     position: absolute;
-    bottom: 20px;
+    bottom: 15px;
     left: 15px;
 }
-.header-title { font-size: 22px; font-weight: bold; }
-.header-sub { font-size: 13px; }
+.header-title {
+    font-size: 22px;
+    font-weight: bold;
+}
+.header-sub {
+    font-size: 13px;
+}
 
 /* TABS */
 .tabs {
@@ -45,7 +48,7 @@ body {
     flex: 1;
     text-align: center;
     padding: 14px;
-    color: gray;
+    color: #777;
 }
 .tab.active {
     color: black;
@@ -54,44 +57,68 @@ body {
 
 /* ORDER */
 .order {
-    background: white;
     padding: 15px;
+    background: white;
+    font-size: 14px;
 }
 
-/* TICKET */
-.ticket {
-    margin: 12px;
+/* CARD */
+.card {
     background: white;
-    border-radius: 14px;
+    margin: 12px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #ddd;
 }
-.ticket-header {
+
+.card-header {
+    background: #eee;
     padding: 12px;
     font-size: 12px;
-    background: #f0f0f0;
     font-weight: bold;
 }
-.ticket-body {
+
+.card-body {
     display: flex;
     justify-content: space-around;
-    padding: 18px;
-    text-align: center;
-}
-.label { font-size: 11px; color: #888; }
-.value { font-size: 16px; font-weight: bold; }
-
-/* BARCODE */
-.barcode-container {
     padding: 15px;
-    border-top: 1px dashed #ddd;
     text-align: center;
+    background: #fafafa;
 }
-.barcode-text {
+
+.label {
     font-size: 11px;
     color: #777;
-    margin-top: 5px;
-    letter-spacing: 2px;
+}
+.value {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* TRANSFER ROW */
+.transfer-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    align-items: center;
+    font-size: 14px;
+    border-top: 1px solid #eee;
+}
+
+.transfer-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    background: #eee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* FLOATING BUTTON */
@@ -107,11 +134,12 @@ body {
     display: flex;
     gap: 25px;
 }
+
 .floating button {
     border: none;
     background: none;
     font-weight: 600;
-    color: #555;
+    color: #777;
     cursor: pointer;
 }
 
@@ -133,15 +161,18 @@ body {
     padding: 20px;
     transition: 0.3s;
 }
+
 .seat {
     padding: 15px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
 }
+
 .seat.selected {
     color: #2563eb;
     font-weight: bold;
 }
+
 .confirm {
     margin-top: 20px;
     width: 100%;
@@ -149,24 +180,26 @@ body {
     border: none;
     background: #2563eb;
     color: white;
-    border-radius: 12px;
+    border-radius: 10px;
     font-weight: bold;
 }
 
 /* TRANSFER PAGE */
 #transferPage {
     display: none;
+    padding: 20px;
     background: white;
     min-height: 100vh;
-    padding: 20px;
 }
+
 .input {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
-    border: 1px solid #ccc;
     border-radius: 8px;
+    border: 1px solid #ccc;
 }
+
 .submit {
     margin-top: 20px;
     width: 100%;
@@ -174,22 +207,21 @@ body {
     border: none;
     background: #2563eb;
     color: white;
-    border-radius: 12px;
-    font-weight: bold;
+    border-radius: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- MAIN PAGE -->
+<!-- MAIN -->
 <div id="mainPage">
 
 <div class="header">
     <div class="header-content">
         <div class="header-sub">SAT • MAY 16, 2026 • 7:00 PM</div>
-        <div class="header-title">BTS WORLD TOUR 'ARIRANG'</div>
-        <div class="header-sub">Stanford Stadium</div>
+        <div class="header-title">BTS WORLD TOUR 'ARIRANG' IN STANFORD</div>
+        <div class="header-sub">Stanford Stadium - Stanford, CA</div>
     </div>
 </div>
 
@@ -200,21 +232,44 @@ body {
 
 <div class="order">
     <b>Order #44-26129/NCA</b><br>
-    <span style="color:#777;">2 Tickets</span>
+    <span style="color:#777;">x2 Tickets</span>
 </div>
 
-<div class="ticket">
-    <div class="ticket-header">ARMY MEMBERSHIP PRESALE</div>
+<!-- CARD 1 -->
+<div class="card">
+    <div class="card-header">ARMY MEMBERSHIP PRESALE - PREFERRED SEATING</div>
 
-    <div class="ticket-body">
+    <div class="card-body">
         <div><div class="label">SECTION</div><div class="value">B</div></div>
         <div><div class="label">ROW</div><div class="value">8</div></div>
-        <div><div class="label">SEATS</div><div class="value">5-6</div></div>
+        <div><div class="label">SEAT</div><div class="value">5</div></div>
     </div>
 
-    <div class="barcode-container">
-        <svg id="barcode"></svg>
-        <div class="barcode-text">BTS-SEC-B-ROW8-5-6</div>
+    <div class="transfer-row">
+        <div class="transfer-left">
+            <div class="circle">↗</div>
+            <span></span>
+        </div>
+        🗑
+    </div>
+</div>
+
+<!-- CARD 2 -->
+<div class="card">
+    <div class="card-header">ARMY MEMBERSHIP PRESALE - PREFERRED SEATING</div>
+
+    <div class="card-body">
+        <div><div class="label">SECTION</div><div class="value">B</div></div>
+        <div><div class="label">ROW</div><div class="value">8</div></div>
+        <div><div class="label">SEAT</div><div class="value">6</div></div>
+    </div>
+
+    <div class="transfer-row">
+        <div class="transfer-left">
+            <div class="circle">↗</div>
+            <span></span>
+        </div>
+        🗑
     </div>
 </div>
 
@@ -225,10 +280,9 @@ body {
 
 </div>
 
-<!-- TRANSFER FORM PAGE -->
+<!-- TRANSFER FORM -->
 <div id="transferPage">
     <h2>Transfer Tickets</h2>
-
     <input class="input" placeholder="Full Name">
     <input class="input" placeholder="Email Address">
     <input class="input" placeholder="Phone Number">
@@ -249,22 +303,14 @@ body {
 </div>
 
 <script>
-// BARCODE
-JsBarcode("#barcode", "BTS-SEC-B-ROW8-5-6", {
-    format: "CODE128",
-    width: 2,
-    height: 60,
-    displayValue: false
-});
-
-// OPEN SHEET
-document.getElementById("transferBtn").onclick = function () {
+// OPEN
+transferBtn.onclick = () => {
     overlay.style.display = "block";
     setTimeout(()=>sheet.style.bottom="0",10);
 };
 
 // CLOSE
-overlay.onclick = function () {
+overlay.onclick = () => {
     sheet.style.bottom = "-100%";
     setTimeout(()=>overlay.style.display="none",300);
 };
@@ -284,13 +330,13 @@ function goToTransfer(){
         return;
     }
 
-    document.getElementById("mainPage").style.display = "none";
-    document.getElementById("transferPage").style.display = "block";
+    mainPage.style.display = "none";
+    transferPage.style.display = "block";
 }
 
 // FINAL
 function finishTransfer(){
-    alert("Transfer Sent Successfully!");
+    alert("Transfer Sent!");
 }
 </script>
 
