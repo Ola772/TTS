@@ -1,59 +1,62 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Ticket UI</title>
+<title>Tickets</title>
 
 <style>
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-    background: #f5f5f5;
+    background: #f2f2f2;
 }
 
 /* HEADER */
 .header {
-    position: relative;
-    height: 220px;
+    height: 240px;
     background: url('https://s1.ticketm.net/dam/a/2a7/70e4e1ab-52f1-4df1-94a8-186fe4a602a7_EVENT_DETAIL_PAGE_16_9.jpg') center/cover;
+    position: relative;
     color: white;
 }
 
-.header-overlay {
+.header::after {
+    content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.5);
 }
 
 .header-content {
     position: absolute;
-    bottom: 15px;
+    bottom: 20px;
     left: 15px;
+    z-index: 2;
 }
 
 .header-title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
 }
 
 .header-sub {
-    font-size: 12px;
+    font-size: 13px;
+    opacity: 0.9;
 }
 
 /* TABS */
 .tabs {
     display: flex;
     background: white;
+    border-bottom: 1px solid #ddd;
 }
 
 .tab {
     flex: 1;
     text-align: center;
-    padding: 12px;
-    color: gray;
+    padding: 14px;
     font-weight: 500;
+    color: #777;
 }
 
 .tab.active {
@@ -63,66 +66,63 @@ body {
 
 /* ORDER */
 .order {
+    background: white;
     padding: 15px;
-    background: white;
-    margin-top: 5px;
+    font-size: 14px;
 }
 
-.order-title {
-    font-weight: bold;
-}
-
-/* TICKET */
+/* TICKET CARD */
 .ticket {
+    margin: 12px;
     background: white;
-    margin: 10px 15px;
-    border-radius: 10px;
+    border-radius: 14px;
     overflow: hidden;
-    border: 1px solid #ddd;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 .ticket-header {
-    padding: 10px;
+    padding: 12px;
     font-size: 12px;
-    background: #eee;
+    background: #f0f0f0;
     font-weight: bold;
 }
 
 .ticket-body {
     display: flex;
     justify-content: space-around;
-    padding: 15px;
+    padding: 18px;
     text-align: center;
 }
 
-.ticket-body div {
-    font-size: 14px;
-}
-
 .label {
-    color: gray;
     font-size: 11px;
+    color: #888;
 }
 
-/* FLOATING BUTTON (UNCHANGED LOOK) */
+.value {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* FLOATING ACTION BAR */
 .floating {
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     background: white;
-    border-radius: 30px;
-    padding: 10px 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    border-radius: 40px;
+    padding: 12px 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     display: flex;
-    gap: 20px;
+    gap: 25px;
 }
 
 .floating button {
     border: none;
     background: none;
-    font-weight: bold;
-    color: gray;
+    font-weight: 600;
+    color: #555;
     cursor: pointer;
 }
 
@@ -138,7 +138,7 @@ body {
     display: none;
 }
 
-/* BOTTOM SHEET */
+/* SHEET */
 #sheet {
     position: absolute;
     bottom: -100%;
@@ -146,12 +146,24 @@ body {
     background: white;
     border-radius: 20px 20px 0 0;
     padding: 20px;
-    transition: 0.3s ease;
+    transition: 0.3s;
 }
 
+/* HANDLE */
+.handle {
+    width: 40px;
+    height: 5px;
+    background: #ccc;
+    border-radius: 10px;
+    margin: 0 auto 15px;
+}
+
+/* SEATS */
 .seat {
     padding: 15px;
     border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
     cursor: pointer;
 }
 
@@ -160,15 +172,15 @@ body {
     font-weight: bold;
 }
 
-/* CONFIRM BUTTON */
+/* BUTTON */
 .confirm {
     margin-top: 20px;
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: none;
     background: #2563eb;
     color: white;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: bold;
 }
 </style>
@@ -178,8 +190,6 @@ body {
 
 <!-- HEADER -->
 <div class="header">
-    <div class="header-overlay"></div>
-
     <div class="header-content">
         <div class="header-sub">SAT • MAY 16, 2026 • 7:00 PM</div>
         <div class="header-title">BTS WORLD TOUR 'ARIRANG'</div>
@@ -195,50 +205,31 @@ body {
 
 <!-- ORDER -->
 <div class="order">
-    <div class="order-title">Order #44-26129/NCA</div>
-    <div style="font-size:12px;color:gray;">x2 Tickets</div>
+    <strong>Order #44-26129/NCA</strong><br>
+    <span style="color:#777;">2 Tickets</span>
 </div>
 
-<!-- TICKETS -->
+<!-- TICKET -->
 <div class="ticket">
     <div class="ticket-header">ARMY MEMBERSHIP PRESALE</div>
 
     <div class="ticket-body">
         <div>
             <div class="label">SECTION</div>
-            <div>Sec B</div>
+            <div class="value">B</div>
         </div>
         <div>
             <div class="label">ROW</div>
-            <div>8</div>
+            <div class="value">8</div>
         </div>
         <div>
-            <div class="label">SEAT</div>
-            <div>5</div>
+            <div class="label">SEATS</div>
+            <div class="value">5-6</div>
         </div>
     </div>
 </div>
 
-<div class="ticket">
-    <div class="ticket-header">ARMY MEMBERSHIP PRESALE</div>
-
-    <div class="ticket-body">
-        <div>
-            <div class="label">SECTION</div>
-            <div>Sec B</div>
-        </div>
-        <div>
-            <div class="label">ROW</div>
-            <div>8</div>
-        </div>
-        <div>
-            <div class="label">SEAT</div>
-            <div>6</div>
-        </div>
-    </div>
-</div>
-
-<!-- FLOATING BUTTON -->
+<!-- FLOATING -->
 <div class="floating">
     <button id="transferBtn">Transfer</button>
     <button>Sell</button>
@@ -247,6 +238,8 @@ body {
 <!-- OVERLAY -->
 <div id="overlay">
     <div id="sheet">
+
+        <div class="handle"></div>
 
         <h3>Select Tickets</h3>
 
@@ -259,7 +252,7 @@ body {
 </div>
 
 <script>
-// OPEN SHEET
+// OPEN
 document.getElementById("transferBtn").onclick = function () {
     document.getElementById("overlay").style.display = "block";
 
@@ -268,7 +261,7 @@ document.getElementById("transferBtn").onclick = function () {
     }, 10);
 };
 
-// CLOSE WHEN CLICK OUTSIDE
+// CLOSE
 document.getElementById("overlay").onclick = function () {
     closeSheet();
 };
@@ -277,7 +270,6 @@ document.getElementById("sheet").onclick = function (e) {
     e.stopPropagation();
 };
 
-// CLOSE FUNCTION
 function closeSheet() {
     document.getElementById("sheet").style.bottom = "-100%";
 
@@ -286,12 +278,12 @@ function closeSheet() {
     }, 300);
 }
 
-// SELECT SEAT
+// SELECT
 function toggleSeat(el) {
     el.classList.toggle("selected");
 }
 
-// CONFIRM TRANSFER
+// CONFIRM
 function confirmTransfer() {
     let selected = document.querySelectorAll(".seat.selected");
 
