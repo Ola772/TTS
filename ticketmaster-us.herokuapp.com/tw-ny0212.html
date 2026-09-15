@@ -11,7 +11,6 @@
     background: #f5f5f5;
     color: #111;
     -webkit-font-smoothing: antialiased;
-    padding-bottom: 100px;
   }
 
   /* ===== HEADER ===== */
@@ -25,12 +24,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.85;
+    opacity: 0.9;
   }
   .header-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 55%, transparent 100%);
   }
   .header-top {
     position: absolute;
@@ -44,7 +43,7 @@
     color: white;
   }
   .back-btn {
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.45);
     border: none;
     color: white;
     width: 36px;
@@ -54,6 +53,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
   .header-content {
     position: absolute;
@@ -63,21 +63,9 @@
     color: white;
     z-index: 5;
   }
-  .header-date {
-    font-size: 13px;
-    opacity: 0.9;
-    margin-bottom: 6px;
-  }
-  .header-title {
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 4px;
-  }
-  .header-venue {
-    font-size: 14px;
-    opacity: 0.9;
-  }
+  .header-date { font-size: 13px; opacity: 0.9; margin-bottom: 6px; }
+  .header-title { font-size: 22px; font-weight: 800; line-height: 1.2; margin-bottom: 4px; }
+  .header-venue { font-size: 14px; opacity: 0.9; }
   .ticket-count-badge {
     position: absolute;
     top: 16px;
@@ -106,6 +94,9 @@
     position: relative;
     z-index: 10;
     box-shadow: 0 4px 12px rgba(2,108,223,0.35);
+    border: none;
+    width: calc(100% - 32px);
+    cursor: pointer;
   }
 
   /* ===== TABS ===== */
@@ -124,10 +115,7 @@
     color: #777;
     position: relative;
   }
-  .tab.active {
-    color: #000;
-    font-weight: 700;
-  }
+  .tab.active { color: #000; font-weight: 700; }
   .tab.active::after {
     content: "";
     position: absolute;
@@ -156,7 +144,7 @@
   /* ===== TICKET CARDS ===== */
   .ticket-card {
     background: white;
-    margin: 0 0 1px;
+    margin: 0;
     padding: 16px;
     border-bottom: 1px solid #f0f0f0;
   }
@@ -170,9 +158,6 @@
     display: flex;
     justify-content: space-between;
   }
-  .detail {
-    text-align: left;
-  }
   .detail-label {
     font-size: 11px;
     color: #888;
@@ -180,10 +165,7 @@
     letter-spacing: 0.4px;
     margin-bottom: 3px;
   }
-  .detail-value {
-    font-size: 18px;
-    font-weight: 700;
-  }
+  .detail-value { font-size: 18px; font-weight: 700; }
 
   /* ===== MORE OPTIONS + MAP ===== */
   .more-options {
@@ -199,27 +181,20 @@
   }
   .map-container {
     position: relative;
-    height: 160px;
+    height: 180px;
     border-radius: 12px;
     overflow: hidden;
-    background: #e8e8e8;
+    background: #e5e5e5;
   }
-  .map-container img {
+  .map-container iframe {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-  }
-  .map-pin {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -100%);
-    font-size: 28px;
+    border: 0;
   }
   .get-directions {
     display: block;
     text-align: center;
-    margin-top: 12px;
+    margin-top: 14px;
     color: #026cdf;
     font-weight: 600;
     font-size: 15px;
@@ -245,11 +220,11 @@
   .seat-map {
     width: 100%;
     border-radius: 8px;
-    background: #f0f4ff;
-    padding: 10px;
+    background: #eef3fb;
+    padding: 12px;
   }
 
-  /* ===== YOU GOT TICKETS ===== */
+  /* ===== PROMO ===== */
   .promo-card {
     background: #111;
     margin: 16px;
@@ -270,17 +245,10 @@
     flex-direction: column;
     justify-content: center;
   }
-  .promo-content h4 {
-    font-size: 16px;
-    font-weight: 800;
-    margin-bottom: 4px;
-  }
-  .promo-content p {
-    font-size: 12px;
-    opacity: 0.85;
-  }
+  .promo-content h4 { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+  .promo-content p { font-size: 12px; opacity: 0.85; }
 
-  /* ===== FLOATING TRANSFER / SELL ===== */
+  /* ===== FLOATING BAR ===== */
   .floating-bar {
     position: fixed;
     bottom: 24px;
@@ -306,8 +274,147 @@
     align-items: center;
     gap: 6px;
   }
-  .floating-bar button:first-child {
-    color: #026cdf;
+  .floating-bar button:first-child { color: #026cdf; }
+
+  /* ===== TICKET VIEW PAGE ===== */
+  #ticketViewPage {
+    display: none;
+    min-height: 100vh;
+    background: #f8f8f8;
+  }
+  .tv-header {
+    background: #111;
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .tv-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .tv-header-info { flex: 1; }
+  .tv-header-info h3 { font-size: 15px; font-weight: 700; }
+  .tv-header-info p { font-size: 12px; opacity: 0.8; }
+
+  .ticket-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 0 10px;
+    gap: 16px;
+  }
+  .ticket-slider::-webkit-scrollbar { display: none; }
+
+  .single-ticket {
+    scroll-snap-align: center;
+    background: white;
+    border-radius: 16px;
+    margin: 0 16px;
+    min-width: calc(100% - 32px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  .ticket-art {
+    height: 220px;
+    background: #222;
+    position: relative;
+    overflow: hidden;
+  }
+  .ticket-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .barcode-area {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    background: white;
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .barcode-area img {
+    height: 40px;
+    width: auto;
+  }
+  .barcode-text {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.3;
+  }
+  .ticket-body {
+    padding: 20px 18px 24px;
+  }
+  .seat-row {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  .seat-item { text-align: center; }
+  .seat-item .label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .seat-item .value {
+    font-size: 26px;
+    font-weight: 800;
+  }
+  .reserved-badge {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .ticket-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .ticket-actions button {
+    flex: 1;
+    padding: 13px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .btn-wallet {
+    background: #000;
+    color: white;
+  }
+  .btn-info {
+    background: #f0f0f0;
+    color: #333;
+  }
+  .ticket-counter {
+    text-align: center;
+    padding: 8px;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
   }
 
   /* ===== OVERLAY + SHEET ===== */
@@ -337,11 +444,7 @@
     border-radius: 2px;
     margin: 0 auto 16px;
   }
-  .sheet-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
+  .sheet-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
   .seat-option {
     padding: 16px 0;
     border-bottom: 1px solid #f0f0f0;
@@ -380,7 +483,7 @@
   }
   .confirm-btn:disabled { background: #ccc; }
 
-  /* ===== TRANSFER PAGE ===== */
+  /* ===== TRANSFER + SUCCESS ===== */
   #transferPage, #successPage {
     display: none;
     min-height: 100vh;
@@ -435,8 +538,6 @@
     font-size: 16px;
     margin-top: 8px;
   }
-
-  /* ===== SUCCESS ===== */
   #successPage {
     text-align: center;
     padding: 80px 24px;
@@ -453,7 +554,6 @@
     font-weight: 700;
     font-size: 16px;
   }
-
   .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -466,11 +566,9 @@
 
 <!-- ==================== MAIN PAGE ==================== -->
 <div id="mainPage">
-
-  <!-- HEADER -->
   <div class="header">
-    <img class="header-img" src="https://i.scdn.co/image/ab6761610000e5eb0a73807778b3a2c3c5b0b0b0" 
-         onerror="this.src='https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800'" 
+    <img class="header-img" 
+         src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=900&q=80" 
          alt="Twenty One Pilots">
     <div class="header-overlay"></div>
     <div class="header-top">
@@ -485,15 +583,13 @@
     </div>
   </div>
 
-  <a href="#" class="view-tickets-btn" onclick="alert('Ticket view coming soon')">View Tickets</a>
+  <button class="view-tickets-btn" onclick="openTicketView()">View Tickets</button>
 
-  <!-- TABS -->
   <div class="tabs">
     <div class="tab active">Tickets</div>
     <div class="tab">Extras</div>
   </div>
 
-  <!-- ORDER -->
   <div class="order">
     <div class="order-top">
       <b>Order #24-500040/OHS</b>
@@ -502,25 +598,29 @@
     <div class="order-count" id="orderCount">x2 Tickets</div>
   </div>
 
-  <!-- TICKETS LIST -->
-  <div id="ticketsList">
-    <!-- filled by JS -->
-  </div>
+  <div id="ticketsList"></div>
 
   <div class="empty-state" id="emptyState">
     <h3 style="color:#333;margin-bottom:8px">No tickets remaining</h3>
     <p>All tickets have been transferred.</p>
   </div>
 
-  <!-- MORE OPTIONS + MAP -->
+  <!-- MAP -->
   <div class="more-options" id="moreOptions">
     <h3>MORE OPTIONS</h3>
     <div class="map-container">
-      <img src="https://maps.googleapis.com/maps/api/staticmap?center=Ohio+Stadium,Columbus,OH&zoom=15&size=600x300&maptype=roadmap&key=AIzaSyDummy" 
-           onerror="this.style.background='#dce8f5'" alt="Map">
-      <div class="map-pin">📍</div>
+      <!-- Real interactive map of Ohio Stadium -->
+      <iframe 
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-83.025%2C40.000%2C-83.010%2C40.010&amp;layer=mapnik&amp;marker=40.0017%2C-83.0197"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
     </div>
-    <a href="#" class="get-directions">Get Directions</a>
+    <a href="https://www.google.com/maps/dir/?api=1&destination=Ohio+Stadium,+Columbus,+OH" 
+       target="_blank" 
+       class="get-directions">
+      Get Directions
+    </a>
   </div>
 
   <!-- SEAT MAP -->
@@ -529,19 +629,17 @@
     <p>Venue layout for this event</p>
     <div class="seat-map">
       <svg viewBox="0 0 400 220" width="100%">
-        <!-- Simplified stadium -->
-        <rect x="140" y="90" width="120" height="40" fill="#1a3a6e" rx="4"/>
-        <text x="200" y="115" text-anchor="middle" fill="white" font-size="12" font-weight="bold">STAGE</text>
-        <!-- Lower bowl -->
-        <path d="M60,140 Q200,180 340,140 L320,200 Q200,230 80,200 Z" fill="#3b6cb5"/>
-        <!-- Upper -->
-        <path d="M40,80 Q200,40 360,80 L340,130 Q200,160 60,130 Z" fill="#2a5a9e"/>
-        <text x="200" y="70" text-anchor="middle" fill="white" font-size="10">UPPER LEVEL</text>
+        <rect x="145" y="95" width="110" height="35" fill="#1a3a6e" rx="4"/>
+        <text x="200" y="118" text-anchor="middle" fill="white" font-size="13" font-weight="bold">STAGE</text>
+        <path d="M50,145 Q200,185 350,145 L330,205 Q200,235 70,205 Z" fill="#3b6cb5"/>
+        <path d="M35,75 Q200,30 365,75 L345,135 Q200,165 55,135 Z" fill="#2a5a9e"/>
+        <text x="200" y="65" text-anchor="middle" fill="white" font-size="11">UPPER LEVEL</text>
+        <circle cx="200" cy="170" r="6" fill="#ff3b30"/>
       </svg>
     </div>
   </div>
 
-  <!-- YOU GOT TICKETS -->
+  <!-- PROMO -->
   <div class="promo-card" id="promoCard">
     <img class="promo-img" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300" alt="">
     <div class="promo-content">
@@ -551,22 +649,39 @@
     </div>
   </div>
 
-  <!-- FLOATING BAR -->
+  <div style="height:90px"></div>
+
   <div class="floating-bar" id="floatingBar">
     <button id="transferBtn">↗ Transfer</button>
     <button>↻ Sell</button>
   </div>
 </div>
 
+<!-- ==================== TICKET VIEW PAGE ==================== -->
+<div id="ticketViewPage">
+  <div class="tv-header">
+    <button onclick="closeTicketView()">←</button>
+    <div class="tv-header-info">
+      <h3>Twenty One Pilots - Ohio Stadium</h3>
+      <p>Sat • Oct 17 2026 • 6:00 PM</p>
+    </div>
+  </div>
+
+  <div class="ticket-slider" id="ticketSlider">
+    <!-- tickets injected by JS -->
+  </div>
+
+  <div class="ticket-counter" id="ticketCounter">1 of 2</div>
+</div>
+
 <!-- ==================== TRANSFER PAGE ==================== -->
 <div id="transferPage">
   <div class="page-header">
-    <button class="back" onclick="goBack()">←</button>
+    <button class="back" onclick="goBackToMain()">←</button>
     <h2>Transfer Tickets</h2>
   </div>
   <div class="transfer-body">
     <div class="selected-box" id="selectedSummary"></div>
-
     <div class="form-group">
       <label>Recipient Full Name</label>
       <input class="input" id="name" placeholder="Full name">
@@ -579,7 +694,6 @@
       <label>Phone (optional)</label>
       <input class="input" id="phone" type="tel" placeholder="+1 555 000 0000">
     </div>
-
     <button class="send-btn" onclick="sendTransfer()">Send Transfer</button>
   </div>
 </div>
@@ -603,7 +717,6 @@
 </div>
 
 <script>
-  // Ticket data
   let tickets = JSON.parse(localStorage.getItem("tm_tix")) || [
     { id: "15", section: "13 C", row: "20", seat: "15", type: "General Sale" },
     { id: "16", section: "13 C", row: "20", seat: "16", type: "General Sale" }
@@ -611,6 +724,7 @@
 
   let selected = [];
 
+  // ========== RENDER MAIN LIST ==========
   function render() {
     const list = document.getElementById("ticketsList");
     const empty = document.getElementById("emptyState");
@@ -646,15 +760,15 @@
         <div class="ticket-card">
           <div class="ticket-type">${t.type}</div>
           <div class="ticket-details">
-            <div class="detail">
+            <div>
               <div class="detail-label">Section</div>
               <div class="detail-value">${t.section}</div>
             </div>
-            <div class="detail">
+            <div>
               <div class="detail-label">Row</div>
               <div class="detail-value">${t.row}</div>
             </div>
-            <div class="detail">
+            <div>
               <div class="detail-label">Seat</div>
               <div class="detail-value">${t.seat}</div>
             </div>
@@ -663,7 +777,7 @@
       `;
     });
 
-    // Update sheet options
+    // seat options for transfer
     const opts = document.getElementById("seatOptions");
     opts.innerHTML = "";
     tickets.forEach(t => {
@@ -676,7 +790,89 @@
     });
   }
 
-  // Open transfer sheet
+  // ========== VIEW TICKETS ==========
+  function openTicketView() {
+    if (tickets.length === 0) {
+      alert("No tickets to view");
+      return;
+    }
+
+    const slider = document.getElementById("ticketSlider");
+    slider.innerHTML = "";
+
+    tickets.forEach((t, i) => {
+      // Simple barcode using SVG
+      const barcodeSVG = generateBarcode(t.id + t.seat);
+
+      slider.innerHTML += `
+        <div class="single-ticket">
+          <div class="ticket-art">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80" alt="">
+            <div class="barcode-area">
+              ${barcodeSVG}
+              <div class="barcode-text">
+                Screenshots won't get you in<br>
+                <strong style="color:#111">Ticket ${i+1}</strong>
+              </div>
+            </div>
+          </div>
+          <div class="ticket-body">
+            <div class="seat-row">
+              <div class="seat-item">
+                <div class="label">Row</div>
+                <div class="value">${t.row}</div>
+              </div>
+              <div class="seat-item">
+                <div class="label">Seat</div>
+                <div class="value">${t.seat}</div>
+              </div>
+            </div>
+            <div class="reserved-badge">Reserved Ticket • ${t.type}</div>
+            <div class="ticket-actions">
+              <button class="btn-wallet" onclick="alert('Added to Apple Wallet (demo)')">
+                 Add to Apple Wallet
+              </button>
+              <button class="btn-info" onclick="alert('Ticket Info\\n\\nSection: ${t.section}\\nRow: ${t.row}\\nSeat: ${t.seat}\\nOrder: #24-500040/OHS')">
+                ⓘ Ticket Info
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("ticketViewPage").style.display = "block";
+    updateCounter();
+
+    // update counter on scroll
+    slider.onscroll = updateCounter;
+  }
+
+  function generateBarcode(text) {
+    // Simple visual barcode
+    let bars = "";
+    for (let i = 0; i < 40; i++) {
+      const h = 28 + (Math.sin(i * 0.7) * 8);
+      const w = (i % 3 === 0) ? 3 : 1.5;
+      bars += `<rect x="${i * 4}" y="${30 - h}" width="${w}" height="${h}" fill="#111"/>`;
+    }
+    return `<svg width="160" height="40" viewBox="0 0 160 40">${bars}</svg>`;
+  }
+
+  function updateCounter() {
+    const slider = document.getElementById("ticketSlider");
+    const cardWidth = slider.querySelector(".single-ticket")?.offsetWidth || 300;
+    const index = Math.round(slider.scrollLeft / (cardWidth + 16));
+    document.getElementById("ticketCounter").textContent = `${Math.min(index + 1, tickets.length)} of ${tickets.length}`;
+  }
+
+  function closeTicketView() {
+    document.getElementById("ticketViewPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+  }
+
+  // ========== TRANSFER FLOW ==========
   document.getElementById("transferBtn").onclick = () => {
     selected = [];
     document.querySelectorAll(".seat-option").forEach(el => el.classList.remove("selected"));
@@ -711,19 +907,17 @@
   function continueTransfer() {
     if (!selected.length) return;
     closeSheet();
-
     const chosen = tickets.filter(t => selected.includes(t.id));
     document.getElementById("selectedSummary").innerHTML = `
       <strong>${chosen.length} ticket${chosen.length > 1 ? "s" : ""} selected</strong><br>
       ${chosen.map(t => `Sec ${t.section} • Row ${t.row} • Seat ${t.seat}`).join("<br>")}
     `;
-
     document.getElementById("mainPage").style.display = "none";
     document.getElementById("transferPage").style.display = "block";
     window.scrollTo(0,0);
   }
 
-  function goBack() {
+  function goBackToMain() {
     document.getElementById("transferPage").style.display = "none";
     document.getElementById("mainPage").style.display = "block";
   }
@@ -731,17 +925,14 @@
   function sendTransfer() {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
-
     if (!name) return alert("Please enter the recipient's name");
     if (!email || !email.includes("@")) return alert("Please enter a valid email");
 
-    // Remove transferred tickets
     tickets = tickets.filter(t => !selected.includes(t.id));
     localStorage.setItem("tm_tix", JSON.stringify(tickets));
 
     document.getElementById("transferPage").style.display = "none";
     document.getElementById("successPage").style.display = "block";
-
     document.getElementById("successMsg").innerHTML = `
       You transferred <strong>${selected.length} ticket${selected.length > 1 ? "s" : ""}</strong>
       to <strong>${name}</strong> (${email}).<br><br>
@@ -759,7 +950,7 @@
     render();
   }
 
-  // Initial render
+  // Init
   render();
 </script>
 </body>
