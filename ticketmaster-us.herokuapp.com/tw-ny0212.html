@@ -8,51 +8,111 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #f4f4f4;
+    background: #f5f5f5;
     color: #111;
     -webkit-font-smoothing: antialiased;
+    padding-bottom: 100px;
   }
 
-  /* ========== HEADER ========== */
+  /* ===== HEADER ===== */
   .header {
-    height: 220px;
-    background: url(https://pub-dc9a9c6ac2a64ba48bce426ced0ac56a.r2.dev/groups/BTS/profile.jpg?v=1774193936551) center/cover;
     position: relative;
-    color: white;
+    height: 280px;
+    background: #111;
+    overflow: hidden;
   }
-  .header::after {
-    content: "";
+  .header-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+  }
+  .header-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+    background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+  }
+  .header-top {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+    color: white;
+  }
+  .back-btn {
+    background: rgba(0,0,0,0.4);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .header-content {
     position: absolute;
-    bottom: 18px;
+    bottom: 20px;
     left: 16px;
     right: 16px;
-    z-index: 2;
+    color: white;
+    z-index: 5;
   }
   .header-date {
     font-size: 13px;
     opacity: 0.9;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
   .header-title {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.25;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
     margin-bottom: 4px;
   }
   .header-venue {
-    font-size: 13px;
+    font-size: 14px;
     opacity: 0.9;
   }
+  .ticket-count-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 5;
+  }
 
-  /* ========== TABS ========== */
+  /* ===== VIEW TICKETS BUTTON ===== */
+  .view-tickets-btn {
+    display: block;
+    margin: -22px 16px 0;
+    background: #026cdf;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(2,108,223,0.35);
+  }
+
+  /* ===== TABS ===== */
   .tabs {
     display: flex;
     background: white;
+    margin-top: 16px;
     border-bottom: 1px solid #e5e5e5;
   }
   .tab {
@@ -66,134 +126,195 @@
   }
   .tab.active {
     color: #000;
-    font-weight: 600;
+    font-weight: 700;
   }
   .tab.active::after {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 20%;
-    width: 60%;
+    left: 25%;
+    width: 50%;
     height: 3px;
     background: #026cdf;
     border-radius: 3px 3px 0 0;
   }
 
-  /* ========== ORDER INFO ========== */
+  /* ===== ORDER ===== */
   .order {
     background: white;
-    padding: 14px 16px;
+    padding: 14px 16px 8px;
     font-size: 14px;
-    border-bottom: 1px solid #eee;
   }
-  .order b { font-size: 15px; }
-  .order span { color: #666; font-size: 13px; }
-
-  /* ========== TICKET CARDS ========== */
-  .card {
-    background: white;
-    margin: 12px 12px 0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    border: 1px solid #e8e8e8;
-  }
-  .card-header {
-    background: #f7f7f7;
-    padding: 12px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #333;
-    letter-spacing: 0.2px;
-  }
-  .card-body {
-    display: flex;
-    justify-content: space-around;
-    padding: 18px 10px;
-    text-align: center;
-  }
-  .label {
-    font-size: 11px;
-    color: #888;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .value {
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .transfer-row {
+  .order-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 14px;
-    border-top: 1px solid #f0f0f0;
-    font-size: 14px;
   }
-  .transfer-left {
+  .order b { font-size: 15px; }
+  .order-count { color: #666; font-size: 13px; margin-top: 2px; }
+
+  /* ===== TICKET CARDS ===== */
+  .ticket-card {
+    background: white;
+    margin: 0 0 1px;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .ticket-type {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+  }
+  .ticket-details {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #026cdf;
-    font-weight: 500;
+    justify-content: space-between;
   }
-  .circle {
-    width: 32px;
-    height: 32px;
-    background: #e8f1fc;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
+  .detail {
+    text-align: left;
   }
-  .delete-btn {
-    background: none;
-    border: none;
+  .detail-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 3px;
+  }
+  .detail-value {
     font-size: 18px;
-    color: #999;
-    cursor: pointer;
-    padding: 4px 8px;
+    font-weight: 700;
   }
 
-  /* ========== FLOATING BAR ========== */
-  .floating {
+  /* ===== MORE OPTIONS + MAP ===== */
+  .more-options {
+    background: white;
+    margin-top: 12px;
+    padding: 16px;
+  }
+  .more-options h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #333;
+  }
+  .map-container {
+    position: relative;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #e8e8e8;
+  }
+  .map-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .map-pin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    font-size: 28px;
+  }
+  .get-directions {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    color: #026cdf;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  /* ===== SEAT MAP ===== */
+  .seat-map-section {
+    background: white;
+    margin-top: 12px;
+    padding: 16px;
+  }
+  .seat-map-section h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .seat-map-section p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+  .seat-map {
+    width: 100%;
+    border-radius: 8px;
+    background: #f0f4ff;
+    padding: 10px;
+  }
+
+  /* ===== YOU GOT TICKETS ===== */
+  .promo-card {
+    background: #111;
+    margin: 16px;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    color: white;
+  }
+  .promo-img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+  }
+  .promo-content {
+    padding: 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .promo-content h4 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .promo-content p {
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  /* ===== FLOATING TRANSFER / SELL ===== */
+  .floating-bar {
     position: fixed;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
     background: white;
     border-radius: 50px;
-    padding: 10px 8px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    padding: 6px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
     display: flex;
-    gap: 4px;
     z-index: 50;
   }
-  .floating button {
+  .floating-bar button {
     border: none;
     background: none;
     font-weight: 600;
     font-size: 15px;
-    color: #555;
+    color: #333;
     cursor: pointer;
-    padding: 10px 28px;
+    padding: 12px 28px;
     border-radius: 40px;
-    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  .floating button:active {
-    background: #f0f0f0;
-  }
-  #transferBtn {
+  .floating-bar button:first-child {
     color: #026cdf;
   }
 
-  /* ========== OVERLAY + BOTTOM SHEET ========== */
+  /* ===== OVERLAY + SHEET ===== */
   #overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0,0,0,0.5);
     display: none;
     z-index: 100;
   }
@@ -204,13 +325,11 @@
     width: 100%;
     background: white;
     border-radius: 20px 20px 0 0;
-    padding: 20px 20px 40px;
+    padding: 16px 20px 40px;
     transform: translateY(100%);
-    transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
   }
-  #sheet.open {
-    transform: translateY(0);
-  }
+  #sheet.open { transform: translateY(0); }
   .sheet-handle {
     width: 40px;
     height: 4px;
@@ -223,8 +342,8 @@
     font-weight: 700;
     margin-bottom: 16px;
   }
-  .seat {
-    padding: 16px 4px;
+  .seat-option {
+    padding: 16px 0;
     border-bottom: 1px solid #f0f0f0;
     display: flex;
     justify-content: space-between;
@@ -232,14 +351,10 @@
     cursor: pointer;
     font-size: 16px;
   }
-  .seat:last-of-type { border-bottom: none; }
-  .seat.selected {
-    color: #026cdf;
-    font-weight: 600;
-  }
-  .seat .check {
-    width: 22px;
-    height: 22px;
+  .seat-option.selected { color: #026cdf; font-weight: 600; }
+  .check-circle {
+    width: 24px;
+    height: 24px;
     border: 2px solid #ccc;
     border-radius: 50%;
     display: flex;
@@ -248,11 +363,11 @@
     font-size: 14px;
     color: white;
   }
-  .seat.selected .check {
+  .seat-option.selected .check-circle {
     background: #026cdf;
     border-color: #026cdf;
   }
-  .confirm {
+  .confirm-btn {
     margin-top: 24px;
     width: 100%;
     padding: 16px;
@@ -262,14 +377,10 @@
     border-radius: 12px;
     font-weight: 700;
     font-size: 16px;
-    cursor: pointer;
   }
-  .confirm:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
+  .confirm-btn:disabled { background: #ccc; }
 
-  /* ========== TRANSFER PAGE ========== */
+  /* ===== TRANSFER PAGE ===== */
   #transferPage, #successPage {
     display: none;
     min-height: 100vh;
@@ -282,41 +393,28 @@
     border-bottom: 1px solid #eee;
     gap: 12px;
   }
-  .back-btn {
+  .page-header .back {
     background: none;
     border: none;
     font-size: 24px;
-    cursor: pointer;
     color: #026cdf;
-    line-height: 1;
+    cursor: pointer;
   }
-  .page-header h2 {
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .transfer-content {
-    padding: 20px 16px;
-  }
-  .selected-tickets {
-    background: #f8f8f8;
+  .page-header h2 { font-size: 18px; font-weight: 700; }
+  .transfer-body { padding: 20px 16px; }
+  .selected-box {
+    background: #f7f7f7;
     border-radius: 12px;
     padding: 14px;
     margin-bottom: 24px;
     font-size: 14px;
   }
-  .selected-tickets strong {
-    display: block;
-    margin-bottom: 6px;
-  }
-  .form-group {
-    margin-bottom: 18px;
-  }
+  .form-group { margin-bottom: 18px; }
   .form-group label {
     display: block;
     font-size: 13px;
     font-weight: 600;
     margin-bottom: 6px;
-    color: #444;
   }
   .input {
     width: 100%;
@@ -324,14 +422,9 @@
     border-radius: 10px;
     border: 1.5px solid #ddd;
     font-size: 16px;
-    outline: none;
-    transition: border-color 0.2s;
   }
-  .input:focus {
-    border-color: #026cdf;
-  }
-  .submit {
-    margin-top: 12px;
+  .input:focus { outline: none; border-color: #026cdf; }
+  .send-btn {
     width: 100%;
     padding: 16px;
     border: none;
@@ -340,32 +433,17 @@
     border-radius: 12px;
     font-weight: 700;
     font-size: 16px;
-    cursor: pointer;
-  }
-  .submit:disabled {
-    background: #a0c4f0;
-    cursor: not-allowed;
+    margin-top: 8px;
   }
 
-  /* ========== SUCCESS PAGE ========== */
+  /* ===== SUCCESS ===== */
   #successPage {
     text-align: center;
-    padding: 60px 24px;
+    padding: 80px 24px;
   }
-  .success-icon {
-    font-size: 64px;
-    margin-bottom: 20px;
-  }
-  #successPage h2 {
-    font-size: 22px;
-    margin-bottom: 12px;
-  }
-  #successPage p {
-    color: #666;
-    font-size: 15px;
-    line-height: 1.5;
-    margin-bottom: 32px;
-  }
+  .success-icon { font-size: 64px; margin-bottom: 16px; }
+  #successPage h2 { font-size: 22px; margin-bottom: 12px; }
+  #successPage p { color: #555; font-size: 15px; line-height: 1.5; margin-bottom: 32px; }
   .done-btn {
     background: #026cdf;
     color: white;
@@ -374,7 +452,13 @@
     border-radius: 12px;
     font-weight: 700;
     font-size: 16px;
-    cursor: pointer;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    display: none;
   }
 </style>
 </head>
@@ -383,96 +467,120 @@
 <!-- ==================== MAIN PAGE ==================== -->
 <div id="mainPage">
 
+  <!-- HEADER -->
   <div class="header">
+    <img class="header-img" src="https://i.scdn.co/image/ab6761610000e5eb0a73807778b3a2c3c5b0b0b0" 
+         onerror="this.src='https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800'" 
+         alt="Twenty One Pilots">
+    <div class="header-overlay"></div>
+    <div class="header-top">
+      <button class="back-btn">←</button>
+      <span style="font-size:14px;opacity:0.9">Help</span>
+    </div>
+    <div class="ticket-count-badge" id="badgeCount">x2</div>
     <div class="header-content">
-      <div class="header-date">SUN • SEP 06, 2026 • 8:00 PM</div>
-      <div class="header-title">BTS WORLD TOUR 'ARIRANG' IN LOS ANGELES</div>
-      <div class="header-venue">SoFi Stadium • Inglewood, CA</div>
+      <div class="header-date">Sat • Oct 17 2026 • 6:00 PM</div>
+      <div class="header-title">TWENTY ONE PILOTS - OHIO STADIUM</div>
+      <div class="header-venue">Ohio Stadium, Columbus</div>
     </div>
   </div>
 
+  <a href="#" class="view-tickets-btn" onclick="alert('Ticket view coming soon')">View Tickets</a>
+
+  <!-- TABS -->
   <div class="tabs">
     <div class="tab active">Tickets</div>
     <div class="tab">Extras</div>
   </div>
 
+  <!-- ORDER -->
   <div class="order">
-    <b>Order #44-26129/NCA</b><br>
-    <span>2 Tickets</span>
-  </div>
-
-  <!-- Ticket 1 -->
-  <div class="card" data-seat="8">
-    <div class="card-header">ARMY MEMBERSHIP PRESALE • SOUNDCHECK VIP PACKAGE</div>
-    <div class="card-body">
-      <div>
-        <div class="label">Section</div>
-        <div class="value">C130</div>
-      </div>
-      <div>
-        <div class="label">Row</div>
-        <div class="value">10</div>
-      </div>
-      <div>
-        <div class="label">Seat</div>
-        <div class="value">8</div>
-      </div>
-  </div>
-
-  <!-- Ticket 2 -->
-  <div class="card" data-seat="9">
-    <div class="card-header">ARMY MEMBERSHIP PRESALE • SOUNDCHECK VIP PACKAGE</div>
-    <div class="card-body">
-      <div>
-        <div class="label">Section</div>
-        <div class="value">C130</div>
-      </div>
-      <div>
-        <div class="label">Row</div>
-        <div class="value">10</div>
-      </div>
-      <div>
-        <div class="label">Seat</div>
-        <div class="value">9</div>
-      </div>
+    <div class="order-top">
+      <b>Order #24-500040/OHS</b>
+      <span style="font-size:20px;color:#999">⋮</span>
     </div>
+    <div class="order-count" id="orderCount">x2 Tickets</div>
+  </div>
+
+  <!-- TICKETS LIST -->
+  <div id="ticketsList">
+    <!-- filled by JS -->
+  </div>
+
+  <div class="empty-state" id="emptyState">
+    <h3 style="color:#333;margin-bottom:8px">No tickets remaining</h3>
+    <p>All tickets have been transferred.</p>
+  </div>
+
+  <!-- MORE OPTIONS + MAP -->
+  <div class="more-options" id="moreOptions">
+    <h3>MORE OPTIONS</h3>
+    <div class="map-container">
+      <img src="https://maps.googleapis.com/maps/api/staticmap?center=Ohio+Stadium,Columbus,OH&zoom=15&size=600x300&maptype=roadmap&key=AIzaSyDummy" 
+           onerror="this.style.background='#dce8f5'" alt="Map">
+      <div class="map-pin">📍</div>
+    </div>
+    <a href="#" class="get-directions">Get Directions</a>
+  </div>
+
+  <!-- SEAT MAP -->
+  <div class="seat-map-section" id="seatMapSection">
+    <h3>SEAT MAP</h3>
+    <p>Venue layout for this event</p>
+    <div class="seat-map">
+      <svg viewBox="0 0 400 220" width="100%">
+        <!-- Simplified stadium -->
+        <rect x="140" y="90" width="120" height="40" fill="#1a3a6e" rx="4"/>
+        <text x="200" y="115" text-anchor="middle" fill="white" font-size="12" font-weight="bold">STAGE</text>
+        <!-- Lower bowl -->
+        <path d="M60,140 Q200,180 340,140 L320,200 Q200,230 80,200 Z" fill="#3b6cb5"/>
+        <!-- Upper -->
+        <path d="M40,80 Q200,40 360,80 L340,130 Q200,160 60,130 Z" fill="#2a5a9e"/>
+        <text x="200" y="70" text-anchor="middle" fill="white" font-size="10">UPPER LEVEL</text>
+      </svg>
     </div>
   </div>
 
-  <div style="height: 100px;"></div>
+  <!-- YOU GOT TICKETS -->
+  <div class="promo-card" id="promoCard">
+    <img class="promo-img" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300" alt="">
+    <div class="promo-content">
+      <h4>YOU GOT TICKETS!</h4>
+      <p>X2 TICKETS</p>
+      <p style="margin-top:6px;font-size:11px;opacity:0.7">Twenty One Pilots - Ohio Stadium</p>
+    </div>
+  </div>
 
-  <div class="floating">
-    <button id="transferBtn">Transfer</button>
-    <button>Sell</button>
+  <!-- FLOATING BAR -->
+  <div class="floating-bar" id="floatingBar">
+    <button id="transferBtn">↗ Transfer</button>
+    <button>↻ Sell</button>
   </div>
 </div>
 
-<!-- ==================== TRANSFER FORM ==================== -->
+<!-- ==================== TRANSFER PAGE ==================== -->
 <div id="transferPage">
   <div class="page-header">
-    <button class="back-btn" onclick="goBackToMain()">←</button>
+    <button class="back" onclick="goBack()">←</button>
     <h2>Transfer Tickets</h2>
   </div>
-
-  <div class="transfer-content">
-    <div class="selected-tickets" id="selectedTicketsSummary">
-      <!-- filled by JS -->
-    </div>
+  <div class="transfer-body">
+    <div class="selected-box" id="selectedSummary"></div>
 
     <div class="form-group">
       <label>Recipient Full Name</label>
-      <input class="input" id="recipientName" placeholder="e.g. Jane Doe" autocomplete="name">
+      <input class="input" id="name" placeholder="Full name">
     </div>
     <div class="form-group">
       <label>Email Address</label>
-      <input class="input" id="recipientEmail" type="email" placeholder="jane@email.com" autocomplete="email">
+      <input class="input" id="email" type="email" placeholder="email@example.com">
     </div>
     <div class="form-group">
-      <label>Phone Number (optional)</label>
-      <input class="input" id="recipientPhone" type="tel" placeholder="+1 555 000 0000" autocomplete="tel">
+      <label>Phone (optional)</label>
+      <input class="input" id="phone" type="tel" placeholder="+1 555 000 0000">
     </div>
 
-    <button class="submit" id="sendTransferBtn" onclick="finishTransfer()">Send Transfer</button>
+    <button class="send-btn" onclick="sendTransfer()">Send Transfer</button>
   </div>
 </div>
 
@@ -480,10 +588,8 @@
 <div id="successPage">
   <div class="success-icon">✅</div>
   <h2>Transfer Sent!</h2>
-  <p id="successMessage">
-    Your tickets have been transferred successfully.
-  </p>
-  <button class="done-btn" onclick="resetApp()">Done</button>
+  <p id="successMsg"></p>
+  <button class="done-btn" onclick="finish()">Done</button>
 </div>
 
 <!-- ==================== BOTTOM SHEET ==================== -->
@@ -491,139 +597,170 @@
   <div id="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">Select tickets to transfer</div>
-
-    <div class="seat" data-seat="8" onclick="toggleSeat(this)">
-      <span>Section C130 • Row 10 • Seat 8</span>
-      <div class="check">✓</div>
-    </div>
-    <div class="seat" data-seat="9" onclick="toggleSeat(this)">
-      <span>Section C130 • Row 10 • Seat 9</span>
-      <div class="check">✓</div>
-    </div>
-
-    <button class="confirm" id="continueBtn" onclick="goToTransfer()" disabled>Continue</button>
+    <div id="seatOptions"></div>
+    <button class="confirm-btn" id="continueBtn" disabled onclick="continueTransfer()">Continue</button>
   </div>
 </div>
 
 <script>
-  // Elements
-  const overlay = document.getElementById("overlay");
-  const sheet = document.getElementById("sheet");
-  const transferBtn = document.getElementById("transferBtn");
-  const continueBtn = document.getElementById("continueBtn");
-  const mainPage = document.getElementById("mainPage");
-  const transferPage = document.getElementById("transferPage");
-  const successPage = document.getElementById("successPage");
+  // Ticket data
+  let tickets = JSON.parse(localStorage.getItem("tm_tix")) || [
+    { id: "15", section: "13 C", row: "20", seat: "15", type: "General Sale" },
+    { id: "16", section: "13 C", row: "20", seat: "16", type: "General Sale" }
+  ];
 
-  let selectedSeats = [];
+  let selected = [];
 
-  // Open bottom sheet
-  transferBtn.onclick = () => {
-    // reset selection
-    document.querySelectorAll(".seat").forEach(s => s.classList.remove("selected"));
-    selectedSeats = [];
-    updateContinueBtn();
+  function render() {
+    const list = document.getElementById("ticketsList");
+    const empty = document.getElementById("emptyState");
+    const floating = document.getElementById("floatingBar");
+    const more = document.getElementById("moreOptions");
+    const seatMap = document.getElementById("seatMapSection");
+    const promo = document.getElementById("promoCard");
 
-    overlay.style.display = "block";
-    requestAnimationFrame(() => {
-      sheet.classList.add("open");
+    list.innerHTML = "";
+
+    if (tickets.length === 0) {
+      empty.style.display = "block";
+      floating.style.display = "none";
+      more.style.display = "none";
+      seatMap.style.display = "none";
+      promo.style.display = "none";
+      document.getElementById("badgeCount").textContent = "x0";
+      document.getElementById("orderCount").textContent = "x0 Tickets";
+      return;
+    }
+
+    empty.style.display = "none";
+    floating.style.display = "flex";
+    more.style.display = "block";
+    seatMap.style.display = "block";
+    promo.style.display = "flex";
+
+    document.getElementById("badgeCount").textContent = "x" + tickets.length;
+    document.getElementById("orderCount").textContent = "x" + tickets.length + " Tickets";
+
+    tickets.forEach(t => {
+      list.innerHTML += `
+        <div class="ticket-card">
+          <div class="ticket-type">${t.type}</div>
+          <div class="ticket-details">
+            <div class="detail">
+              <div class="detail-label">Section</div>
+              <div class="detail-value">${t.section}</div>
+            </div>
+            <div class="detail">
+              <div class="detail-label">Row</div>
+              <div class="detail-value">${t.row}</div>
+            </div>
+            <div class="detail">
+              <div class="detail-label">Seat</div>
+              <div class="detail-value">${t.seat}</div>
+            </div>
+          </div>
+        </div>
+      `;
     });
+
+    // Update sheet options
+    const opts = document.getElementById("seatOptions");
+    opts.innerHTML = "";
+    tickets.forEach(t => {
+      opts.innerHTML += `
+        <div class="seat-option" data-id="${t.id}" onclick="toggle(this)">
+          <span>${t.type} • Sec ${t.section} • Row ${t.row} • Seat ${t.seat}</span>
+          <div class="check-circle">✓</div>
+        </div>
+      `;
+    });
+  }
+
+  // Open transfer sheet
+  document.getElementById("transferBtn").onclick = () => {
+    selected = [];
+    document.querySelectorAll(".seat-option").forEach(el => el.classList.remove("selected"));
+    document.getElementById("continueBtn").disabled = true;
+    document.getElementById("continueBtn").textContent = "Continue";
+    document.getElementById("overlay").style.display = "block";
+    requestAnimationFrame(() => document.getElementById("sheet").classList.add("open"));
   };
 
-  // Close sheet when clicking overlay
-  overlay.onclick = (e) => {
-    if (e.target === overlay) {
-      closeSheet();
-    }
+  document.getElementById("overlay").onclick = (e) => {
+    if (e.target.id === "overlay") closeSheet();
   };
 
   function closeSheet() {
-    sheet.classList.remove("open");
-    setTimeout(() => {
-      overlay.style.display = "none";
-    }, 320);
+    document.getElementById("sheet").classList.remove("open");
+    setTimeout(() => document.getElementById("overlay").style.display = "none", 300);
   }
 
-  // Toggle seat selection
-  function toggleSeat(el) {
+  function toggle(el) {
     el.classList.toggle("selected");
-    const seat = el.dataset.seat;
+    const id = el.dataset.id;
     if (el.classList.contains("selected")) {
-      if (!selectedSeats.includes(seat)) selectedSeats.push(seat);
+      if (!selected.includes(id)) selected.push(id);
     } else {
-      selectedSeats = selectedSeats.filter(s => s !== seat);
+      selected = selected.filter(s => s !== id);
     }
-    updateContinueBtn();
+    const btn = document.getElementById("continueBtn");
+    btn.disabled = selected.length === 0;
+    btn.textContent = selected.length ? `Continue with ${selected.length} ticket${selected.length > 1 ? "s" : ""}` : "Continue";
   }
 
-  function updateContinueBtn() {
-    continueBtn.disabled = selectedSeats.length === 0;
-    continueBtn.textContent = selectedSeats.length
-      ? `Continue with ${selectedSeats.length} ticket${selectedSeats.length > 1 ? "s" : ""}`
-      : "Continue";
-  }
-
-  // Go to transfer form
-  function goToTransfer() {
-    if (selectedSeats.length === 0) return;
-
+  function continueTransfer() {
+    if (!selected.length) return;
     closeSheet();
 
-    // Build summary
-    const summary = document.getElementById("selectedTicketsSummary");
-    summary.innerHTML = `
-      <strong>${selectedSeats.length} ticket${selectedSeats.length > 1 ? "s" : ""} selected</strong>
-      Section C130 • Row 10 • Seat${selectedSeats.length > 1 ? "s" : ""} ${selectedSeats.sort().join(" & ")}
+    const chosen = tickets.filter(t => selected.includes(t.id));
+    document.getElementById("selectedSummary").innerHTML = `
+      <strong>${chosen.length} ticket${chosen.length > 1 ? "s" : ""} selected</strong><br>
+      ${chosen.map(t => `Sec ${t.section} • Row ${t.row} • Seat ${t.seat}`).join("<br>")}
     `;
 
-    mainPage.style.display = "none";
-    transferPage.style.display = "block";
-    window.scrollTo(0, 0);
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("transferPage").style.display = "block";
+    window.scrollTo(0,0);
   }
 
-  // Back from transfer form
-  function goBackToMain() {
-    transferPage.style.display = "none";
-    mainPage.style.display = "block";
+  function goBack() {
+    document.getElementById("transferPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
   }
 
-  // Finish transfer
-  function finishTransfer() {
-    const name = document.getElementById("recipientName").value.trim();
-    const email = document.getElementById("recipientEmail").value.trim();
+  function sendTransfer() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
 
-    if (!name) {
-      alert("Please enter the recipient's full name.");
-      return;
-    }
-    if (!email || !email.includes("@")) {
-      alert("Please enter a valid email address.");
-      return;
-    }
+    if (!name) return alert("Please enter the recipient's name");
+    if (!email || !email.includes("@")) return alert("Please enter a valid email");
 
-    // Show success
-    transferPage.style.display = "none";
-    successPage.style.display = "block";
+    // Remove transferred tickets
+    tickets = tickets.filter(t => !selected.includes(t.id));
+    localStorage.setItem("tm_tix", JSON.stringify(tickets));
 
-    document.getElementById("successMessage").innerHTML = `
-      You transferred <strong>${selectedSeats.length} ticket${selectedSeats.length > 1 ? "s" : ""}</strong>
-      (Seat${selectedSeats.length > 1 ? "s" : ""} ${selectedSeats.sort().join(" & ")})
-      to <strong>${name}</strong> (${email}).
-      <br><br>
-      They will receive an email shortly with instructions to accept the tickets.
+    document.getElementById("transferPage").style.display = "none";
+    document.getElementById("successPage").style.display = "block";
+
+    document.getElementById("successMsg").innerHTML = `
+      You transferred <strong>${selected.length} ticket${selected.length > 1 ? "s" : ""}</strong>
+      to <strong>${name}</strong> (${email}).<br><br>
+      They will receive an email to accept the tickets.
     `;
   }
 
-  // Reset everything
-  function resetApp() {
-    successPage.style.display = "none";
-    mainPage.style.display = "block";
-    selectedSeats = [];
-    document.getElementById("recipientName").value = "";
-    document.getElementById("recipientEmail").value = "";
-    document.getElementById("recipientPhone").value = "";
+  function finish() {
+    document.getElementById("successPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("phone").value = "";
+    selected = [];
+    render();
   }
+
+  // Initial render
+  render();
 </script>
-
 </body>
 </html>
