@@ -687,4 +687,339 @@
 <!-- ==================== TICKET VIEW ==================== -->
 <div id="ticketViewPage">
   <div class="tv-header">
-    <button 
+    <button onclick="closeTicketView()">←</button>
+    <div>
+      <div style="font-weight:700;font-size:15px" id="tvTitle"></div>
+      <div style="font-size:12px;opacity:0.8" id="tvDate"></div>
+    </div>
+  </div>
+  <div class="ticket-slider" id="ticketSlider"></div>
+  <div class="ticket-counter" id="ticketCounter">1 of 3</div>
+</div>
+
+<!-- ==================== TRANSFER FORM ==================== -->
+<div id="transferPage">
+  <div class="page-header">
+    <button class="back" onclick="goBackToMain()">←</button>
+    <h2>Transfer Tickets</h2>
+  </div>
+  <div class="transfer-body">
+    <div class="selected-box" id="selectedSummary"></div>
+    <div class="form-group">
+      <label>Recipient Full Name</label>
+      <input class="input" id="name" placeholder="Full name">
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input class="input" id="email" type="email" placeholder="email@example.com">
+    </div>
+    <div class="form-group">
+      <label>Phone (optional)</label>
+      <input class="input" id="phone" type="tel" placeholder="+1 555 000 0000">
+    </div>
+    <button class="send-btn" onclick="sendTransfer()">Send Transfer</button>
+  </div>
+</div>
+
+<!-- ==================== SUCCESS ==================== -->
+<div id="successPage">
+  <div class="success-icon">✅</div>
+  <h2>Transfer Sent!</h2>
+  <p id="successMsg"></p>
+  <button class="done-btn" onclick="finish()">Done</button>
+</div>
+
+<!-- ==================== TRANSFER SHEET ==================== -->
+<div id="overlay">
+  <div id="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">SELECT TICKETS TO TRANSFER</div>
+    <div class="section-info">
+      <span id="sheetSectionInfo">Section <strong>FLOOR</strong>, Row <strong>GA</strong></span>
+      <span id="sheetTicketCount">3 tickets</span>
+    </div>
+    <div class="seat-grid" id="seatGrid"></div>
+    <div class="sheet-footer">
+      <div class="selected-count" id="selectedCount">0 Selected</div>
+      <button class="transfer-to-btn" id="transferToBtn" onclick="continueTransfer()">TRANSFER TO ></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ======================================================
+  //                  EASY TO EDIT SECTION
+  // ======================================================
+
+  const CONFIG = {
+    // Event details
+    eventName: "OLIVIA RODRIGO: THE UNRAVELED TOUR",
+    eventDate: "TUE • SEPT 29, 2026 • 7:00 PM",
+    eventVenue: "PPG Paints Arena — Pittsburgh, PA",
+    orderNumber: "Order #10-53721/IL6",
+
+    // Image (you can change this URL)
+    imageUrl: "https://s1.ticketm.net/dam/a/4e1/ca96dd03-8def-46ae-b6d3-9441e992c4e1_RETINA_PORTRAIT_3_2.jpg",
+
+    // Map (OpenStreetMap embed + Google Maps link)
+    mapEmbed: "https://www.openstreetmap.org/export/embed.html?bbox=-80.015%2C40.438%2C-79.995%2C40.448&layer=mapnik&marker=40.4396%2C-80.0094",
+    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=PPG+Paints+Arena,+Pittsburgh,+PA",
+
+    // Your tickets - EDIT THESE
+    tickets: [
+      { id: "1", section: "FLOOR", row: "GA", seat: "-", type: "Official Platinum" },
+      { id: "2", section: "FLOOR", row: "GA", seat: "-", type: "Official Platinum" },
+      { id: "3", section: "FLOOR", row: "GA", seat: "-", type: "Official Platinum" }
+    ]
+  };
+
+  // ======================================================
+  //               DO NOT EDIT BELOW THIS LINE
+  // ======================================================
+
+  let tickets = JSON.parse(localStorage.getItem("tm_olivia")) || CONFIG.tickets;
+  let selected = [];
+
+  // Apply config to the page
+  function applyConfig() {
+    document.getElementById("homeImage").src = CONFIG.imageUrl;
+    document.getElementById("homeDate").textContent = CONFIG.eventDate;
+    document.getElementById("homeTitle").textContent = CONFIG.eventName;
+    document.getElementById("homeVenue").textContent = CONFIG.eventVenue;
+
+    document.getElementById("headerImage").src = CONFIG.imageUrl;
+    document.getElementById("headerDate").textContent = CONFIG.eventDate;
+    document.getElementById("headerTitle").textContent = CONFIG.eventName;
+    document.getElementById("headerVenue").textContent = CONFIG.eventVenue;
+
+    document.getElementById("orderNumber").textContent = CONFIG.orderNumber;
+    document.getElementById("promoImage").src = CONFIG.imageUrl;
+    document.getElementById("mapFrame").src = CONFIG.mapEmbed;
+    document.getElementById("directionsLink").href = CONFIG.directionsUrl;
+
+    document.getElementById("tvTitle").textContent = CONFIG.eventName;
+    document.getElementById("tvDate").textContent = CONFIG.eventDate;
+  }
+
+  function openEvent() {
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+    render();
+  }
+
+  function goHome() {
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("homePage").style.display = "block";
+  }
+
+  function render() {
+    const list = document.getElementById("ticketsList");
+    const empty = document.getElementById("emptyState");
+    const floating = document.getElementById("floatingBar");
+    const more = document.getElementById("moreOptions");
+    const promo = document.getElementById("promoCard");
+
+    list.innerHTML = "";
+
+    if (tickets.length === 0) {
+      empty.style.display = "block";
+      floating.style.display = "none";
+      more.style.display = "none";
+      promo.style.display = "none";
+      document.getElementById("badgeCount").textContent = "x0";
+      document.getElementById("orderCount").textContent = "x0 Tickets";
+      document.getElementById("promoCount").textContent = "X0 TICKETS";
+      return;
+    }
+
+    empty.style.display = "none";
+    floating.style.display = "flex";
+    more.style.display = "block";
+    promo.style.display = "flex";
+
+    document.getElementById("badgeCount").textContent = "x" + tickets.length;
+    document.getElementById("orderCount").textContent = "x" + tickets.length + " Tickets";
+    document.getElementById("promoCount").textContent = "X" + tickets.length + " TICKETS";
+    document.getElementById("sheetTicketCount").textContent = tickets.length + " tickets";
+
+    if (tickets.length > 0) {
+      document.getElementById("sheetSectionInfo").innerHTML = 
+        `Section <strong>${tickets[0].section}</strong>, Row <strong>${tickets[0].row}</strong>`;
+    }
+
+    tickets.forEach(t => {
+      list.innerHTML += `
+        <div class="ticket-card">
+          <div class="ticket-type">${t.type}</div>
+          <div class="ticket-details">
+            <div>
+              <div class="detail-label">Section</div>
+              <div class="detail-value">${t.section}</div>
+            </div>
+            <div>
+              <div class="detail-label">Row</div>
+              <div class="detail-value">${t.row}</div>
+            </div>
+            <div>
+              <div class="detail-label">Seat</div>
+              <div class="detail-value">${t.seat}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    const grid = document.getElementById("seatGrid");
+    grid.innerHTML = "";
+    tickets.forEach(t => {
+      grid.innerHTML += `
+        <div class="seat-card" data-id="${t.id}" onclick="toggleSeat(this)">
+          <div class="seat-label">SEAT ${t.seat}</div>
+          <div class="circle">✓</div>
+        </div>
+      `;
+    });
+  }
+
+  // Transfer functions
+  document.getElementById("transferBtn").onclick = () => {
+    selected = [];
+    document.querySelectorAll(".seat-card").forEach(c => c.classList.remove("selected"));
+    updateSheetFooter();
+    document.getElementById("overlay").style.display = "block";
+    requestAnimationFrame(() => document.getElementById("sheet").classList.add("open"));
+  };
+
+  document.getElementById("overlay").onclick = (e) => {
+    if (e.target.id === "overlay") closeSheet();
+  };
+
+  function closeSheet() {
+    document.getElementById("sheet").classList.remove("open");
+    setTimeout(() => document.getElementById("overlay").style.display = "none", 300);
+  }
+
+  function toggleSeat(el) {
+    el.classList.toggle("selected");
+    const id = el.dataset.id;
+    if (el.classList.contains("selected")) {
+      if (!selected.includes(id)) selected.push(id);
+    } else {
+      selected = selected.filter(s => s !== id);
+    }
+    updateSheetFooter();
+  }
+
+  function updateSheetFooter() {
+    document.getElementById("selectedCount").textContent = selected.length + " Selected";
+    document.getElementById("transferToBtn").classList.toggle("active", selected.length > 0);
+  }
+
+  function continueTransfer() {
+    if (selected.length === 0) return;
+    closeSheet();
+    const chosen = tickets.filter(t => selected.includes(t.id));
+    document.getElementById("selectedSummary").innerHTML = `
+      <strong>${chosen.length} ticket${chosen.length > 1 ? "s" : ""} selected</strong><br>
+      ${chosen.map(t => `Sec ${t.section} • Row ${t.row} • Seat ${t.seat}`).join("<br>")}
+    `;
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("transferPage").style.display = "block";
+    window.scrollTo(0,0);
+  }
+
+  function goBackToMain() {
+    document.getElementById("transferPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+  }
+
+  function sendTransfer() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    if (!name) return alert("Please enter the recipient's name");
+    if (!email || !email.includes("@")) return alert("Please enter a valid email");
+
+    tickets = tickets.filter(t => !selected.includes(t.id));
+    localStorage.setItem("tm_olivia", JSON.stringify(tickets));
+
+    document.getElementById("transferPage").style.display = "none";
+    document.getElementById("successPage").style.display = "block";
+    document.getElementById("successMsg").innerHTML = `
+      You transferred <strong>${selected.length} ticket${selected.length > 1 ? "s" : ""}</strong>
+      to <strong>${name}</strong> (${email}).
+    `;
+  }
+
+  function finish() {
+    document.getElementById("successPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("phone").value = "";
+    selected = [];
+    render();
+  }
+
+  function openTicketView() {
+    if (tickets.length === 0) return alert("No tickets left");
+    const slider = document.getElementById("ticketSlider");
+    slider.innerHTML = "";
+
+    tickets.forEach((t, i) => {
+      slider.innerHTML += `
+        <div class="single-ticket">
+          <div class="ticket-art">
+            <img src="${CONFIG.imageUrl}" alt="">
+            <div class="barcode-area">
+              <svg width="140" height="36" viewBox="0 0 140 36">
+                ${Array.from({length:35}, (_,i) => 
+                  `<rect x="${i*4}" y="${8+Math.sin(i)*6}" width="${i%3===0?2.5:1.2}" height="${20+Math.sin(i)*8}" fill="#111"/>`
+                ).join("")}
+              </svg>
+              <div style="font-size:11px;color:#555;line-height:1.3">
+                Screenshots won't get you in<br>
+                <strong style="color:#111">Ticket ${i+1}</strong>
+              </div>
+            </div>
+          </div>
+          <div class="ticket-body">
+            <div class="seat-row">
+              <div class="seat-item">
+                <div class="label">Section</div>
+                <div class="value">${t.section}</div>
+              </div>
+              <div class="seat-item">
+                <div class="label">Row</div>
+                <div class="value">${t.row}</div>
+              </div>
+              <div class="seat-item">
+                <div class="label">Seat</div>
+                <div class="value">${t.seat}</div>
+              </div>
+            </div>
+            <div class="reserved-badge">${t.type}</div>
+            <div class="ticket-actions">
+              <button class="btn-wallet" onclick="alert('Added to Apple Wallet (demo)')"> Apple Wallet</button>
+              <button class="btn-info" onclick="alert('Ticket Info\\nSection: ${t.section}\\nRow: ${t.row}\\nSeat: ${t.seat}')">Ticket Info</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("ticketViewPage").style.display = "block";
+    document.getElementById("ticketCounter").textContent = `1 of ${tickets.length}`;
+  }
+
+  function closeTicketView() {
+    document.getElementById("ticketViewPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+  }
+
+  // Start
+  applyConfig();
+  render();
+</script>
+</body>
+</html>
