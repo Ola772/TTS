@@ -214,7 +214,7 @@
 
   .order {
     background: white;
-    padding: 14px 16px 6px;
+    padding: 14px 16px 10px;
   }
   .order-top {
     display: flex;
@@ -223,6 +223,17 @@
   }
   .order b { font-size: 15px; }
   .order-count { color: #666; font-size: 13px; margin-top: 2px; }
+
+  .edit-btn {
+    background: #026cdf;
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
 
   .ticket-card {
     background: #f7f7f7;
@@ -325,7 +336,76 @@
   }
   .floating-bar button:first-child { color: #026cdf; }
 
-  /* ========== TRANSFER SHEET (new style) ========== */
+  /* ========== EDIT MODAL ========== */
+  #editModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 200;
+    align-items: flex-end;
+  }
+  #editModal.show { display: flex; }
+  .edit-sheet {
+    background: white;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  .edit-sheet h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .edit-group {
+    margin-bottom: 14px;
+  }
+  .edit-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #444;
+  }
+  .edit-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  .edit-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .edit-actions button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .btn-cancel { background: #eee; color: #333; }
+  .btn-save { background: #026cdf; color: white; }
+  .add-ticket-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    background: #f0f7ff;
+    border: 1.5px dashed #026cdf;
+    color: #026cdf;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ========== TRANSFER SHEET ========== */
   #overlay {
     position: fixed;
     inset: 0;
@@ -366,15 +446,12 @@
     margin-bottom: 16px;
     font-size: 14px;
   }
-  .section-info span:last-child {
-    color: #666;
-    font-size: 13px;
-  }
   .seat-grid {
     display: flex;
     gap: 12px;
     justify-content: center;
     margin-bottom: 24px;
+    flex-wrap: wrap;
   }
   .seat-card {
     width: 90px;
@@ -384,7 +461,6 @@
     padding: 12px 8px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s;
   }
   .seat-card.selected {
     border-color: #026cdf;
@@ -419,26 +495,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 8px;
   }
-  .selected-count {
-    font-size: 14px;
-    color: #666;
-  }
+  .selected-count { font-size: 14px; color: #666; }
   .transfer-to-btn {
     background: none;
     border: none;
     color: #026cdf;
     font-weight: 700;
     font-size: 15px;
-    cursor: pointer;
     opacity: 0.4;
+    cursor: pointer;
   }
-  .transfer-to-btn.active {
-    opacity: 1;
-  }
+  .transfer-to-btn.active { opacity: 1; }
 
-  /* ========== TRANSFER FORM + SUCCESS + TICKET VIEW ========== */
+  /* ========== OTHER PAGES ========== */
   #transferPage, #successPage, #ticketViewPage {
     display: none;
     min-height: 100vh;
@@ -481,7 +551,6 @@
     border: 1.5px solid #ddd;
     font-size: 16px;
   }
-  .input:focus { outline: none; border-color: #026cdf; }
   .send-btn {
     width: 100%;
     padding: 16px;
@@ -498,8 +567,6 @@
     padding: 80px 24px;
   }
   .success-icon { font-size: 64px; margin-bottom: 16px; }
-  #successPage h2 { font-size: 22px; margin-bottom: 12px; }
-  #successPage p { color: #555; font-size: 15px; line-height: 1.5; margin-bottom: 32px; }
   .done-btn {
     background: #026cdf;
     color: white;
@@ -510,7 +577,6 @@
     font-size: 16px;
   }
 
-  /* Ticket View */
   .tv-header {
     background: #111;
     color: white;
@@ -540,464 +606,4 @@
     border-radius: 16px;
     margin: 0 16px;
     min-width: calc(100% - 32px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    overflow: hidden;
-  }
-  .ticket-art {
-    height: 200px;
-    background: #222;
-    position: relative;
-  }
-  .ticket-art img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .barcode-area {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    right: 14px;
-    background: white;
-    border-radius: 8px;
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .ticket-body { padding: 20px; }
-  .seat-row {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 16px;
-  }
-  .seat-item { text-align: center; }
-  .seat-item .label { font-size: 11px; color: #888; text-transform: uppercase; }
-  .seat-item .value { font-size: 24px; font-weight: 800; }
-  .reserved-badge {
-    background: #111;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 16px;
-  }
-  .ticket-actions {
-    display: flex;
-    gap: 10px;
-  }
-  .ticket-actions button {
-    flex: 1;
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 13px;
-    border: none;
-    cursor: pointer;
-  }
-  .btn-wallet { background: #000; color: white; }
-  .btn-info { background: #f0f0f0; color: #333; }
-  .ticket-counter {
-    text-align: center;
-    padding: 8px;
-    font-size: 14px;
-    color: #666;
-  }
-  .empty-state {
-    text-align: center;
-    padding: 50px 20px;
-    color: #888;
-    display: none;
-  }
-</style>
-</head>
-<body>
-
-<!-- ==================== HOME / MY EVENTS ==================== -->
-<div id="homePage">
-  <div class="home-header">
-    <h1>My Events</h1>
-    <span style="font-size:14px;opacity:0.8">Help</span>
-  </div>
-  <div class="home-tabs">
-    <div class="home-tab active">UPCOMING (1)</div>
-    <div class="home-tab">PAST (0)</div>
-  </div>
-
-  <div class="event-card" onclick="openEvent()">
-    <img src="https://s1.ticketm.net/dam/a/4e1/ca96dd03-8def-46ae-b6d3-9441e992c4e1_RETINA_PORTRAIT_3_2.jpg" 
-         onerror="this.src='https://picsum.photos/800/500'" alt="Olivia Rodrigo">
-    <div class="event-info">
-      <div class="event-date">TUE • SEPT 29, 2026 • 7:00 PM</div>
-      <div class="event-title">OLIVIA RODRIGO: THE UNRAVELED TOUR</div>
-      <div class="event-venue">PPG Paints Arena  — Pittsburgh, PA</div>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <div class="nav-item"><span>🔍</span>Discover</div>
-    <div class="nav-item"><span>♡</span>For You</div>
-    <div class="nav-item active"><span>🎟️</span>My Events</div>
-    <div class="nav-item"><span>💰</span>Sell</div>
-    <div class="nav-item"><span>👤</span>My Account</div>
-  </div>
-</div>
-
-<!-- ==================== EVENT DETAIL ==================== -->
-<div id="mainPage">
-  <div class="header">
-    <img class="header-img" src="https://s1.ticketm.net/dam/a/4e1/ca96dd03-8def-46ae-b6d3-9441e992c4e1_RETINA_PORTRAIT_3_2.jpg" alt="">
-    <div class="header-overlay"></div>
-    <div class="header-top">
-      <button class="back-btn" onclick="goHome()">←</button>
-      <span style="font-size:14px">Help</span>
-    </div>
-    <div class="ticket-badge" id="badgeCount">x3</div>
-    <div class="header-content">
-      <div class="header-date">TUE • SEPT 29, 2026 • 7:00 PM</div>
-      <div class="header-title">OLIVIA RODRIGO: THE UNRAVELED TOUR</div>
-      <div class="header-venue">PPG Paints Arena  — Pittsburgh, PA</div>
-    </div>
-  </div>
-
-  <button class="view-tickets-btn" onclick="openTicketView()">View Tickets</button>
-
-  <div class="tabs">
-    <div class="tab active">Tickets</div>
-    <div class="tab">Extras</div>
-  </div>
-
-  <div class="order">
-    <div class="order-top">
-      <b>Order #10-53721/IL6</b>
-      <span style="font-size:20px;color:#999">⋮</span>
-    </div>
-    <div class="order-count" id="orderCount">x3 Tickets</div>
-  </div>
-
-  <div id="ticketsList"></div>
-  <div class="empty-state" id="emptyState">
-    <h3 style="color:#333;margin-bottom:8px">No tickets remaining</h3>
-    <p>All tickets have been transferred.</p>
-  </div>
-
-  <div class="more-options" id="moreOptions">
-    <h3>MORE OPTIONS</h3>
-    <div class="map-container">
-      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-87.684%2C41.878%2C-87.670%2C41.886&layer=mapnik&marker=41.8806%2C-87.6742" loading="lazy"></iframe>
-    </div>
-    <a href="https://www.google.com/maps/dir/?api=1&destination=United+Center,+Chicago,+IL" target="_blank" class="get-directions">Get Directions</a>
-  </div>
-
-  <div class="promo-card" id="promoCard">
-    <img class="promo-img" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300" alt="">
-    <div class="promo-content">
-      <h4>YOU GOT TICKETS!</h4>
-      <p style="font-size:13px;opacity:0.85;margin-top:4px">X3 TICKETS</p>
-    </div>
-  </div>
-
-  <div class="floating-bar" id="floatingBar">
-    <button id="transferBtn">↗ Transfer</button>
-    <button>↻ Sell</button>
-  </div>
-</div>
-
-<!-- ==================== TICKET VIEW ==================== -->
-<div id="ticketViewPage">
-  <div class="tv-header">
-    <button onclick="closeTicketView()">←</button>
-    <div>
-      <div style="font-weight:700;font-size:15px">Olivia Rodrigo: The Unraveled Tour</div>
-      <div style="font-size:12px;opacity:0.8">Tue • Sept 11, 2026 • 7:00 PM</div>
-    </div>
-  </div>
-  <div class="ticket-slider" id="ticketSlider"></div>
-  <div class="ticket-counter" id="ticketCounter">1 of 3</div>
-</div>
-
-<!-- ==================== TRANSFER FORM ==================== -->
-<div id="transferPage">
-  <div class="page-header">
-    <button class="back" onclick="goBackToMain()">←</button>
-    <h2>Transfer Tickets</h2>
-  </div>
-  <div class="transfer-body">
-    <div class="selected-box" id="selectedSummary"></div>
-    <div class="form-group">
-      <label>Recipient Full Name</label>
-      <input class="input" id="name" placeholder="Full name">
-    </div>
-    <div class="form-group">
-      <label>Email Address</label>
-      <input class="input" id="email" type="email" placeholder="email@example.com">
-    </div>
-    <div class="form-group">
-      <label>Phone (optional)</label>
-      <input class="input" id="phone" type="tel" placeholder="+1 555 000 0000">
-    </div>
-    <button class="send-btn" onclick="sendTransfer()">Send Transfer</button>
-  </div>
-</div>
-
-<!-- ==================== SUCCESS ==================== -->
-<div id="successPage">
-  <div class="success-icon">✅</div>
-  <h2>Transfer Sent!</h2>
-  <p id="successMsg"></p>
-  <button class="done-btn" onclick="finish()">Done</button>
-</div>
-
-<!-- ==================== TRANSFER SHEET ==================== -->
-<div id="overlay">
-  <div id="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">SELECT TICKETS TO TRANSFER</div>
-    
-    <div class="section-info">
-      <span>Section <strong>FLOOR</strong>, Row <strong>GA</strong></span>
-      <span id="sheetTicketCount">3 tickets</span>
-    </div>
-
-    <div class="seat-grid" id="seatGrid">
-      <!-- generated by JS -->
-    </div>
-
-    <div class="sheet-footer">
-      <div class="selected-count" id="selectedCount">0 Selected</div>
-      <button class="transfer-to-btn" id="transferToBtn" onclick="continueTransfer()">TRANSFER TO ></button>
-    </div>
-  </div>
-</div>
-
-<script>
-  let tickets = JSON.parse(localStorage.getItem("tm_olivia")) || [
-    { id: "1", section: "FLOOR", row: "GA", seat: "-", type: "Official Platinum" },
-    { id: "2", section: "FLOOR", row: "GA", seat: "-", type: "Official Platinum" },
-    { id: "3", section: "FLOOR", row: "GA", seat: "-", type: "Official Platinum" }
-  ];
-  let selected = [];
-
-  // ========== HOME ==========
-  function openEvent() {
-    document.getElementById("homePage").style.display = "none";
-    document.getElementById("mainPage").style.display = "block";
-    render();
-  }
-  function goHome() {
-    document.getElementById("mainPage").style.display = "none";
-    document.getElementById("homePage").style.display = "block";
-  }
-
-  // ========== RENDER ==========
-  function render() {
-    const list = document.getElementById("ticketsList");
-    const empty = document.getElementById("emptyState");
-    const floating = document.getElementById("floatingBar");
-    const more = document.getElementById("moreOptions");
-    const promo = document.getElementById("promoCard");
-
-    list.innerHTML = "";
-
-    if (tickets.length === 0) {
-      empty.style.display = "block";
-      floating.style.display = "none";
-      more.style.display = "none";
-      promo.style.display = "none";
-      document.getElementById("badgeCount").textContent = "x0";
-      document.getElementById("orderCount").textContent = "x0 Tickets";
-      return;
-    }
-
-    empty.style.display = "none";
-    floating.style.display = "flex";
-    more.style.display = "block";
-    promo.style.display = "flex";
-
-    document.getElementById("badgeCount").textContent = "x" + tickets.length;
-    document.getElementById("orderCount").textContent = "x" + tickets.length + " Tickets";
-    document.getElementById("sheetTicketCount").textContent = tickets.length + " tickets";
-
-    tickets.forEach(t => {
-      list.innerHTML += `
-        <div class="ticket-card">
-          <div class="ticket-type">${t.type}</div>
-          <div class="ticket-details">
-            <div>
-              <div class="detail-label">Section</div>
-              <div class="detail-value">${t.section}</div>
-            </div>
-            <div>
-              <div class="detail-label">Row</div>
-              <div class="detail-value">${t.row}</div>
-            </div>
-            <div>
-              <div class="detail-label">Seat</div>
-              <div class="detail-value">${t.seat}</div>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-
-    // seat cards for transfer sheet
-    const grid = document.getElementById("seatGrid");
-    grid.innerHTML = "";
-    tickets.forEach(t => {
-      grid.innerHTML += `
-        <div class="seat-card" data-id="${t.id}" onclick="toggleSeat(this)">
-          <div class="seat-label">SEAT ${t.seat}</div>
-          <div class="circle">✓</div>
-        </div>
-      `;
-    });
-  }
-
-  // ========== TRANSFER SHEET ==========
-  document.getElementById("transferBtn").onclick = () => {
-    selected = [];
-    document.querySelectorAll(".seat-card").forEach(c => c.classList.remove("selected"));
-    updateSheetFooter();
-    document.getElementById("overlay").style.display = "block";
-    requestAnimationFrame(() => document.getElementById("sheet").classList.add("open"));
-  };
-
-  document.getElementById("overlay").onclick = (e) => {
-    if (e.target.id === "overlay") closeSheet();
-  };
-
-  function closeSheet() {
-    document.getElementById("sheet").classList.remove("open");
-    setTimeout(() => document.getElementById("overlay").style.display = "none", 300);
-  }
-
-  function toggleSeat(el) {
-    el.classList.toggle("selected");
-    const id = el.dataset.id;
-    if (el.classList.contains("selected")) {
-      if (!selected.includes(id)) selected.push(id);
-    } else {
-      selected = selected.filter(s => s !== id);
-    }
-    updateSheetFooter();
-  }
-
-  function updateSheetFooter() {
-    document.getElementById("selectedCount").textContent = selected.length + " Selected";
-    const btn = document.getElementById("transferToBtn");
-    if (selected.length > 0) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-  }
-
-  function continueTransfer() {
-    if (selected.length === 0) return;
-    closeSheet();
-
-    const chosen = tickets.filter(t => selected.includes(t.id));
-    document.getElementById("selectedSummary").innerHTML = `
-      <strong>${chosen.length} ticket${chosen.length > 1 ? "s" : ""} selected</strong><br>
-      Section FLOOR • Row GA
-    `;
-
-    document.getElementById("mainPage").style.display = "none";
-    document.getElementById("transferPage").style.display = "block";
-    window.scrollTo(0,0);
-  }
-
-  function goBackToMain() {
-    document.getElementById("transferPage").style.display = "none";
-    document.getElementById("mainPage").style.display = "block";
-  }
-
-  function sendTransfer() {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    if (!name) return alert("Please enter the recipient's name");
-    if (!email || !email.includes("@")) return alert("Please enter a valid email");
-
-    tickets = tickets.filter(t => !selected.includes(t.id));
-    localStorage.setItem("tm_olivia", JSON.stringify(tickets));
-
-    document.getElementById("transferPage").style.display = "none";
-    document.getElementById("successPage").style.display = "block";
-    document.getElementById("successMsg").innerHTML = `
-      You transferred <strong>${selected.length} ticket${selected.length > 1 ? "s" : ""}</strong>
-      to <strong>${name}</strong> (${email}).<br><br>
-      They will receive an email to accept the tickets.
-    `;
-  }
-
-  function finish() {
-    document.getElementById("successPage").style.display = "none";
-    document.getElementById("mainPage").style.display = "block";
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("phone").value = "";
-    selected = [];
-    render();
-  }
-
-  // ========== VIEW TICKETS ==========
-  function openTicketView() {
-    if (tickets.length === 0) return alert("No tickets left");
-    const slider = document.getElementById("ticketSlider");
-    slider.innerHTML = "";
-
-    tickets.forEach((t, i) => {
-      slider.innerHTML += `
-        <div class="single-ticket">
-          <div class="ticket-art">
-            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80" alt="">
-            <div class="barcode-area">
-              <svg width="140" height="36" viewBox="0 0 140 36">
-                ${Array.from({length:35}, (_,i) => 
-                  `<rect x="${i*4}" y="${8+Math.sin(i)*6}" width="${i%3===0?2.5:1.2}" height="${20+Math.sin(i)*8}" fill="#111"/>`
-                ).join("")}
-              </svg>
-              <div style="font-size:11px;color:#555;line-height:1.3">
-                Screenshots won't get you in<br>
-                <strong style="color:#111">Ticket ${i+1}</strong>
-              </div>
-            </div>
-          </div>
-          <div class="ticket-body">
-            <div class="seat-row">
-              <div class="seat-item">
-                <div class="label">Section</div>
-                <div class="value">${t.section}</div>
-              </div>
-              <div class="seat-item">
-                <div class="label">Row</div>
-                <div class="value">${t.row}</div>
-              </div>
-            </div>
-            <div class="reserved-badge">Official Platinum • Floor GA</div>
-            <div class="ticket-actions">
-              <button class="btn-wallet" onclick="alert('Added to Apple Wallet (demo)')"> Apple Wallet</button>
-              <button class="btn-info" onclick="alert('Ticket Info\\nSection: FLOOR\\nRow: GA')">Ticket Info</button>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-
-    document.getElementById("mainPage").style.display = "none";
-    document.getElementById("ticketViewPage").style.display = "block";
-    document.getElementById("ticketCounter").textContent = `1 of ${tickets.length}`;
-  }
-
-  function closeTicketView() {
-    document.getElementById("ticketViewPage").style.display = "none";
-    document.getElementById("mainPage").style.display = "block";
-  }
-
-  // Init
-  render();
-</script>
-</body>
-</html>
+    box-shadow: 0 4px 
