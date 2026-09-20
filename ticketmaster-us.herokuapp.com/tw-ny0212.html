@@ -758,10 +758,10 @@
     eventVenue: "PPG Paints Arena — Pittsburgh, PA",
     orderNumber: "Order #10-53721/IL6",
 
-    // Image (you can change this URL)
+    // Image
     imageUrl: "https://s1.ticketm.net/dam/a/4e1/ca96dd03-8def-46ae-b6d3-9441e992c4e1_RETINA_PORTRAIT_3_2.jpg",
 
-    // Map (OpenStreetMap embed + Google Maps link)
+    // Map
     mapEmbed: "https://www.openstreetmap.org/export/embed.html?bbox=-80.015%2C40.438%2C-79.995%2C40.448&layer=mapnik&marker=40.4396%2C-80.0094",
     directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=PPG+Paints+Arena,+Pittsburgh,+PA",
 
@@ -777,10 +777,10 @@
   //               DO NOT EDIT BELOW THIS LINE
   // ======================================================
 
-  let tickets = JSON.parse(localStorage.getItem("tm_olivia")) || CONFIG.tickets;
+  // Always start with the original tickets (no localStorage)
+  let tickets = JSON.parse(JSON.stringify(CONFIG.tickets));
   let selected = [];
 
-  // Apply config to the page
   function applyConfig() {
     document.getElementById("homeImage").src = CONFIG.imageUrl;
     document.getElementById("homeDate").textContent = CONFIG.eventDate;
@@ -881,7 +881,6 @@
     });
   }
 
-  // Transfer functions
   document.getElementById("transferBtn").onclick = () => {
     selected = [];
     document.querySelectorAll(".seat-card").forEach(c => c.classList.remove("selected"));
@@ -939,8 +938,10 @@
     if (!name) return alert("Please enter the recipient's name");
     if (!email || !email.includes("@")) return alert("Please enter a valid email");
 
+    // Remove the transferred tickets (only for this session)
     tickets = tickets.filter(t => !selected.includes(t.id));
-    localStorage.setItem("tm_olivia", JSON.stringify(tickets));
+
+    // NO localStorage → tickets will come back after refresh
 
     document.getElementById("transferPage").style.display = "none";
     document.getElementById("successPage").style.display = "block";
